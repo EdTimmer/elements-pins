@@ -1,9 +1,14 @@
 import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LogoSevenGroup from './LogoSevenGroup';
 
-const LogoSevenWrapper = () => {
+interface Props {
+  guiy: string;
+}
+
+const LogoFiveWrapper = ({guiy}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -13,7 +18,19 @@ const LogoSevenWrapper = () => {
   const handleMouseLeave = () => {
     setIsMouseEntered(false);
   }
-  
+
+  const leftLightRef = useRef<THREE.DirectionalLight | null>(null);
+  const leftLightRefTwo = useRef<THREE.DirectionalLight | null>(null);
+
+  useEffect(() => {
+    if (leftLightRef.current) {
+      leftLightRef.current.lookAt(-1, -0.9, 0);
+    }
+    if (leftLightRefTwo.current) {
+      leftLightRefTwo.current.lookAt(-1, -0.9, 0);
+    }
+  }, []);
+
   return (
     <div 
       style={{ width: `300px`, height: `300px`, cursor: `pointer`}}
@@ -23,14 +40,13 @@ const LogoSevenWrapper = () => {
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
         <ambientLight intensity={1} />
-        <LogoSevenGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} />
-        {/* <directionalLight position={[0, 5, 5]} intensity={1} />
-        <directionalLight position={[-5, -5, 5]} intensity={1} />
-        <directionalLight position={[5, -5, 5]} intensity={1} /> */}
+        <LogoSevenGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
+        {/* <directionalLight position={[2, 5, 5]} intensity={1} /> */}
+        <directionalLight position={[2, -5, 5]} intensity={1} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        
   );
 }
 
-export default LogoSevenWrapper;
+export default LogoFiveWrapper;

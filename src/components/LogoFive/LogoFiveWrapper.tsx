@@ -42,7 +42,7 @@ const LogoFiveWrapper = ({guiy}: Props) => {
         <ambientLight intensity={1} />
         <LogoFiveGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
         {/* <directionalLight position={[2, 5, 5]} intensity={1} /> */}
-        <directionalLight position={[-2, 5, 5]} intensity={1} />
+        <directionalLight position={[2, -5, 5]} intensity={1} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        

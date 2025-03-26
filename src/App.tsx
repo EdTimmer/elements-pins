@@ -11,6 +11,8 @@ import LogoFourWrapper from './components/LogoFour/LogoFourWrapper';
 import LogoTwoWrapper from './components/LogoTwo/LogoTwoWrapper';
 import LogoFiveWrapper from './components/LogoFive/LogoFiveWrapper';
 import LogoThreeWrapper from './components/LogoThree/LogoThreeWrapper';
+import LogoSevenWrapper from './components/LogoSeven/LogoSevenWrapper';
+import LogoEightWrapper from './components/LogoEight/LogoEightWrapper';
 
 function App() {
   return (
@@ -30,6 +32,11 @@ function App() {
           <Row>
             <LogoFiveWrapper guiy={'1060px'} />
             <LogoSixWrapper guiy={'1350px'} />
+          </Row>
+
+          <Row>
+            <LogoSevenWrapper guiy={'1960px'} />
+            <LogoEightWrapper guiy={'2150px'} />
           </Row>
         </CenterSectionWrapper>
       </AppMiddleColumn>

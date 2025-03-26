@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import * as THREE from 'three';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
@@ -7,22 +7,25 @@ interface Props {
   position: [number, number, number];
   rotation: THREE.Euler;
   text: string;
-  textBoldMaterialProps: {
+  size: number;
+  depth: number;
+  textMaterialProps: {
     color: string;
-    metalness: number;
-    roughness: number;
     opacity: number;
+    roughness: number;
+    metalness: number;
     emissive: string;
     emissiveIntensity: number;
-  },
+  }
 }
 
-const LogoTextBold = ({ position, rotation, text, textBoldMaterialProps }: Props) => {
+const Symbol = ({ position, rotation, text, size, depth, textMaterialProps }: Props) => {
+  const meshRef = useRef<THREE.Mesh>(null!);
   const [font, setFont] = useState<Font | null>(null);
 
   useEffect(() => {
     const loader = new FontLoader();
-    loader.load('/fonts/mediator_narrow_web_extra_bold_regular.typeface.json', (loadedFont) => {
+    loader.load('/fonts/noto_sans_symbols_regular.json', (loadedFont) => {
       setFont(loadedFont);
     });
   }, []);
@@ -33,13 +36,13 @@ const LogoTextBold = ({ position, rotation, text, textBoldMaterialProps }: Props
   
       const textOptions = {
         font,
-        size: 1.6,
-        depth: 0.8,
+        size,
+        depth,
         curveSegments: 12,
         bevelEnabled: false,
         bevelThickness: 0.1,
         bevelSize: 0.1,
-        bevelOffset: 0,
+        bevelOffset: 0.0,
         bevelSegments: 5,
       };
   
@@ -55,18 +58,18 @@ const LogoTextBold = ({ position, rotation, text, textBoldMaterialProps }: Props
     if (!font || !textGeometry) return null;
 
   return (
-    <mesh geometry={textGeometry} rotation={rotation} position={position} renderOrder={2}>
+    <mesh ref={meshRef} geometry={textGeometry} rotation={rotation} position={position} renderOrder={2}>
       <meshStandardMaterial 
-        metalness={textBoldMaterialProps.metalness}
-        roughness={textBoldMaterialProps.roughness}
-        color={textBoldMaterialProps.color}
-        opacity={textBoldMaterialProps.opacity}
-        emissive={textBoldMaterialProps.emissive}
-        emissiveIntensity={textBoldMaterialProps.emissiveIntensity}
+        metalness={textMaterialProps.metalness}
+        roughness={textMaterialProps.roughness}
+        color={textMaterialProps.color}
+        opacity={textMaterialProps.opacity}
         transparent
+        emissive={textMaterialProps.emissive}
+        emissiveIntensity={textMaterialProps.emissiveIntensity}
       />
     </mesh>
   );
 };
 
-export default LogoTextBold;
+export default Symbol;

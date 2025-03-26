@@ -13,10 +13,10 @@ interface Props {
 }
 
 const CushionCover = ({ position, rotation, size, scale, cushionCoverMaterialProps: cushionMaterialProps }: Props) => {
-  const shapeOneRef = useRef<THREE.Mesh>(null); 
+  const shapeFiveRef = useRef<THREE.Mesh>(null); 
 
   return (
-    <mesh ref={shapeOneRef} position={position} rotation={rotation} scale={scale} renderOrder={1}>
+    <mesh ref={shapeFiveRef} position={position} rotation={rotation} scale={scale} renderOrder={1}>
       <sphereGeometry args={[size, 32, 32]} />
       <meshBasicMaterial 
         color={cushionMaterialProps.color} 

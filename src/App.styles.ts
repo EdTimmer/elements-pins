@@ -19,7 +19,6 @@ export const AppWrapper = styled.div`
 export const AppMiddleColumn = styled.div`
   position: relative;
   z-index: 1;
-  /* padding-top: 10px; */
   margin: 10px 0;
   width: 100%;
   height: 100%;
@@ -32,6 +31,11 @@ export const CenterSectionWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 `;
 
 export const Row = styled.div`
@@ -42,10 +46,6 @@ export const Row = styled.div`
   margin-bottom: -100px;
   padding: 0;
   flex-wrap: wrap;
-
-  @media (min-width: 1024px) {
-    /* gap: 40rem; */
-  }
 `;
 
 export const Header = styled.h1`

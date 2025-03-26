@@ -7,6 +7,8 @@ interface Props {
   position: [number, number, number];
   rotation: THREE.Euler;
   text: string;
+  size: number;
+  depth: number;
   textMaterialProps: {
     color: string;
     metalness: number;
@@ -18,7 +20,7 @@ interface Props {
   };
 }
 
-const Text = ({ position, rotation, text, textMaterialProps }: Props) => {
+const Text = ({ position, rotation, text, size, depth, textMaterialProps }: Props) => {
   const [font, setFont] = useState<Font | null>(null);
 
   useEffect(() => {
@@ -35,8 +37,8 @@ const Text = ({ position, rotation, text, textMaterialProps }: Props) => {
   
       const textOptions = {
         font,
-        size: 0.8,
-        depth: 0.5,
+        size: size,
+        depth: depth,
         curveSegments: 12,
         bevelEnabled: false,
         bevelThickness: 0.1,

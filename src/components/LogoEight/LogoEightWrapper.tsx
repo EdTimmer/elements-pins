@@ -1,9 +1,14 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useState } from 'react';
+
 import LogoEightGroup from './LogoEightGroup';
 
-const LogoEightWrapper = () => {
+interface Props {
+  guiy: string;
+}
+
+const LogoSixWrapper = ({guiy}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -13,7 +18,7 @@ const LogoEightWrapper = () => {
   const handleMouseLeave = () => {
     setIsMouseEntered(false);
   }
-  
+
   return (
     <div 
       style={{ width: `300px`, height: `300px`, cursor: `pointer`}}
@@ -22,15 +27,15 @@ const LogoEightWrapper = () => {
     >
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
-        <ambientLight intensity={1} />
-        <LogoEightGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} />
-        {/* <directionalLight position={[0, 5, 5]} intensity={1} />
-        <directionalLight position={[-5, -5, 5]} intensity={1} />
-        <directionalLight position={[5, -5, 5]} intensity={1} /> */}
+        <ambientLight intensity={0.5} />
+        <LogoEightGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
+        <directionalLight position={[0, 5, 5]} />
+        <directionalLight position={[-5, -5, 5]} />
+        <directionalLight position={[5, -5, 5]} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        
   );
 }
 
-export default LogoEightWrapper;
+export default LogoSixWrapper;
