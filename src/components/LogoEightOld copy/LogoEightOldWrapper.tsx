@@ -1,14 +1,14 @@
 import { Canvas } from '@react-three/fiber';
-import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { useEffect, useRef, useState } from 'react';
-import LogoOneGroup from './LogoOneGroup';
+import { useState } from 'react';
+
+import LogoEightGroup from './LogoEightGroup';
 
 interface Props {
   guiy: string;
 }
 
-const LogoOneWrapper = ({guiy}: Props) => {
+const LogoEightOldWrapper = ({guiy}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -19,18 +19,6 @@ const LogoOneWrapper = ({guiy}: Props) => {
     setIsMouseEntered(false);
   }
 
-  const leftLightRef = useRef<THREE.DirectionalLight | null>(null);
-  const leftLightRefTwo = useRef<THREE.DirectionalLight | null>(null);
-
-  useEffect(() => {
-    if (leftLightRef.current) {
-      leftLightRef.current.lookAt(-1, -0.9, 0);
-    }
-    if (leftLightRefTwo.current) {
-      leftLightRefTwo.current.lookAt(-1, -0.9, 0);
-    }
-  }, []);
-
   return (
     <div 
       style={{ width: `300px`, height: `300px`, cursor: `pointer`}}
@@ -40,13 +28,14 @@ const LogoOneWrapper = ({guiy}: Props) => {
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
         <ambientLight intensity={0.5} />
-        <LogoOneGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
-        {/* <directionalLight position={[2, 5, 5]} intensity={1} /> */}
-        <directionalLight position={[5, -5, 5]} intensity={1} />
+        <LogoEightGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
+        <directionalLight position={[0, 5, 5]} />
+        <directionalLight position={[-5, -5, 5]} />
+        <directionalLight position={[5, -5, 5]} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        
   );
 }
 
-export default LogoOneWrapper;
+export default LogoEightOldWrapper;

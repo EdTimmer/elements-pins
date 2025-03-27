@@ -7,6 +7,7 @@ import Cushion from './Cushion';
 import Text from './Text';
 import CushionCover from './CushionCover';
 import { listOfImages } from '../../../utilities/listOfImages';
+import Symbol from './Symbol';
 
 interface Props {
   isMouseEntered: boolean;
@@ -15,20 +16,20 @@ interface Props {
   guiy: string;
 }
 
-function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
-  const logoSevenGroupRef = useRef<Group>(null);
+function LogoNineGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
+  const logoNineGroupRef = useRef<Group>(null);
 
   // Set the initial rotation on mount only
   useEffect(() => {
-    if (logoSevenGroupRef.current) {
-      logoSevenGroupRef.current.rotation.y = isFacingUser ? 0 : Math.PI;
+    if (logoNineGroupRef.current) {
+      logoNineGroupRef.current.rotation.y = isFacingUser ? 0 : Math.PI;
     }
   }, [isFacingUser]);
 
   useFrame((state, delta) => {
-      if (logoSevenGroupRef.current) {
+      if (logoNineGroupRef.current) {
         // Apply a "breathing" effect on the X axis.
-        logoSevenGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
+        logoNineGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
   
         // Determine the starting rotation.
         const initialRotation = isFacingUser ? 0 : Math.PI;
@@ -40,15 +41,15 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
         const lerpFactor = 1 - Math.exp(-speed * delta);
         
         // Interpolate the current rotation towards the target rotation.
-        logoSevenGroupRef.current.rotation.y = MathUtils.lerp(
-          logoSevenGroupRef.current.rotation.y,
+        logoNineGroupRef.current.rotation.y = MathUtils.lerp(
+          logoNineGroupRef.current.rotation.y,
           targetY,
           lerpFactor
         );
   
         // Optionally, snap to target if very close.
-        if (Math.abs(logoSevenGroupRef.current.rotation.y - targetY) < 0.001) {
-          logoSevenGroupRef.current.rotation.y = targetY;
+        if (Math.abs(logoNineGroupRef.current.rotation.y - targetY) < 0.001) {
+          logoNineGroupRef.current.rotation.y = targetY;
         }
       }
     });
@@ -90,17 +91,17 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   });
 
   useEffect(() => {
-    const guiOne = new GUI({
+    const guiNine = new GUI({
       width: 350,
       title: 'LEFT - FIRST FROM THE TOP'
     });
     // Position the GUI
-    guiOne.domElement.style.position = 'absolute';
-    guiOne.domElement.style.left = '10px';
-    guiOne.domElement.style.top = guiy;
+    guiNine.domElement.style.position = 'absolute';
+    guiNine.domElement.style.left = '10px';
+    guiNine.domElement.style.top = guiy;
 
     // ROTATION FOLDER
-    const rotationFolder = guiOne.addFolder('Rotation');
+    const rotationFolder = guiNine.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;
 
     const localRotationProps = {
@@ -116,7 +117,7 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
 
     // TEXT FOLDER
-    const textFolder = guiOne.addFolder('Text');
+    const textFolder = guiNine.addFolder('Text');
     textFolderRef.current = textFolder;
     // textFolderRef.current.open();
 
@@ -173,7 +174,7 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
 
     // CUSHION FOLDER
-    const cushionFolder = guiOne.addFolder('Cushion');
+    const cushionFolder = guiNine.addFolder('Cushion');
     cushionRef.current = cushionFolder;
     // cushionRef.current.open();
 
@@ -206,7 +207,7 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
     
     // CUSHION COVER FOLDER
-    const cushionCoverFolder = guiOne.addFolder('Cushion Cover');
+    const cushionCoverFolder = guiNine.addFolder('Cushion Cover');
     cushionCoverRef.current = cushionCoverFolder;
 
     const localCushionCoverProps = {
@@ -246,20 +247,22 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
     
     return () => {
-      guiOne.destroy();
+      guiNine.destroy();
     }
   }, []);
 
   return (
-    <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoSevenGroupRef}>
-      <Text text={'110'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Ds'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Darmstadtium'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
+    <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoNineGroupRef}>
+      <Text text={'28'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Ni'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Nickel'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.7} depth={0.5} textMaterialProps={textMaterialProps} />
 
-      <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} />
+      
+
+      {/* <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} /> */}
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
     </group>    
   );
 }
 
-export default LogoSevenGroup;
+export default LogoNineGroup;

@@ -8,8 +8,9 @@ interface Props {
   guiy: string;
 }
 
-const LogoFiveWrapper = ({guiy}: Props) => {
+const LogoOneWrapper = ({guiy}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
+
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -39,14 +40,14 @@ const LogoFiveWrapper = ({guiy}: Props) => {
     >
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={1} />
         <LogoSevenGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
-        {/* <directionalLight position={[2, 5, 5]} intensity={1} /> */}
-        <directionalLight position={[5, -5, 5]} intensity={1} />
+        <directionalLight position={[2, 3, 3]} intensity={1} />
+        <directionalLight position={[-2, -3, 3]} intensity={1} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        
   );
 }
 
-export default LogoFiveWrapper;
+export default LogoOneWrapper;

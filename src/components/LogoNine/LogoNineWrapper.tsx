@@ -2,14 +2,15 @@ import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useEffect, useRef, useState } from 'react';
-import LogoOneGroup from './LogoOneGroup';
+import LogoNineGroup from './LogoNineGroup';
 
 interface Props {
   guiy: string;
 }
 
-const LogoOneWrapper = ({guiy}: Props) => {
+const LogoNineWrapper = ({guiy}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
+
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -39,14 +40,14 @@ const LogoOneWrapper = ({guiy}: Props) => {
     >
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
-        <ambientLight intensity={0.5} />
-        <LogoOneGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
-        {/* <directionalLight position={[2, 5, 5]} intensity={1} /> */}
-        <directionalLight position={[5, -5, 5]} intensity={1} />
+        <ambientLight intensity={1} />
+        <LogoNineGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
+        <directionalLight position={[2, 3, 3]} intensity={1} />
+        <directionalLight position={[-2, -3, 3]} intensity={1} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        
   );
 }
 
-export default LogoOneWrapper;
+export default LogoNineWrapper;

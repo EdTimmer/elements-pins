@@ -19,13 +19,13 @@ interface Props {
   }
 }
 
-const Text = ({ position, rotation, text, size, depth, textMaterialProps }: Props) => {
+const Symbol = ({ position, rotation, text, size, depth, textMaterialProps }: Props) => {
   const meshRef = useRef<THREE.Mesh>(null!);
   const [font, setFont] = useState<Font | null>(null);
 
   useEffect(() => {
     const loader = new FontLoader();
-    loader.load('/fonts/open_sans_light_regular.typeface.json', (loadedFont) => {
+    loader.load('/fonts/noto_sans_symbols_regular.json', (loadedFont) => {
       setFont(loadedFont);
     });
   }, []);
@@ -72,4 +72,4 @@ const Text = ({ position, rotation, text, size, depth, textMaterialProps }: Prop
   );
 };
 
-export default Text;
+export default Symbol;

@@ -4,9 +4,10 @@ import { Group, MathUtils } from 'three';
 import * as THREE from 'three';
 import { GUI } from 'lil-gui';
 import Cushion from './Cushion';
+import Text from './Text';
 import CushionCover from './CushionCover';
 import { listOfImages } from '../../../utilities/listOfImages';
-import Text from './Text';
+import Symbol from './Symbol';
 
 interface Props {
   isMouseEntered: boolean;
@@ -26,32 +27,32 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   }, [isFacingUser]);
 
   useFrame((state, delta) => {
-    if (logoOneGroupRef.current) {
-      // Apply a "breathing" effect on the X axis.
-      logoOneGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
-
-      // Determine the starting rotation.
-      const initialRotation = isFacingUser ? 0 : Math.PI;
-      // Set the target rotation: rotate an extra PI when the mouse enters.
-      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
-      
-      // Incorporate delta into the interpolation factor for frame rate independence.
-      const speed = 3; // Adjust this to control the smoothness/speed
-      const lerpFactor = 1 - Math.exp(-speed * delta);
-      
-      // Interpolate the current rotation towards the target rotation.
-      logoOneGroupRef.current.rotation.y = MathUtils.lerp(
-        logoOneGroupRef.current.rotation.y,
-        targetY,
-        lerpFactor
-      );
-
-      // Optionally, snap to target if very close.
-      if (Math.abs(logoOneGroupRef.current.rotation.y - targetY) < 0.001) {
-        logoOneGroupRef.current.rotation.y = targetY;
+      if (logoOneGroupRef.current) {
+        // Apply a "breathing" effect on the X axis.
+        logoOneGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
+  
+        // Determine the starting rotation.
+        const initialRotation = isFacingUser ? 0 : Math.PI;
+        // Set the target rotation: rotate an extra PI when the mouse enters.
+        const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+        
+        // Incorporate delta into the interpolation factor for frame rate independence.
+        const speed = 3; // Adjust this to control the smoothness/speed
+        const lerpFactor = 1 - Math.exp(-speed * delta);
+        
+        // Interpolate the current rotation towards the target rotation.
+        logoOneGroupRef.current.rotation.y = MathUtils.lerp(
+          logoOneGroupRef.current.rotation.y,
+          targetY,
+          lerpFactor
+        );
+  
+        // Optionally, snap to target if very close.
+        if (Math.abs(logoOneGroupRef.current.rotation.y - targetY) < 0.001) {
+          logoOneGroupRef.current.rotation.y = targetY;
+        }
       }
-    }
-  });
+    });
 
   // ROTATION GUI REFS
   const rotationFolderRef = useRef<GUI | null>(null);
@@ -69,33 +70,30 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     emissiveIntensity: 0.2,
   });
 
-  // CUSHION GUI REFS
-  const cushionFolderRef = useRef<GUI | null>(null);
-  const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
+  // CUSHION SHADER GUI REFS
+  const cushionRef = useRef<GUI | null>(null);
+  const cushionControllersRef = useRef<Record<string, any>>({});
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    color: '#fff',
-    metalness: 1.0,
-    roughness: 0,
-    opacity: 1,
-    emissive: '#000',
-    emissiveIntensity: 0,
-    envMapIntensity: 0.2,
-    envMapImages: listOfImages,
-    envMapImage: '/images/silver_4.jpg',
+    noise: 1.0,
+    speed: 0.15,
+    oscillationFrequency: 11.0,
   });
 
-  // CUSHION COVERAGE GUI REFS
-  const cushionCoverFolderRef = useRef<GUI | null>(null);
-  const cushionCoverControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
+  // CUSHION COVER GUI REFS
+  const cushionCoverRef = useRef<GUI | null>(null);
+  const cushionCoverControllersRef = useRef<Record<string, any>>({});
   const [cushionCoverMaterialProps, setCushionCoverMaterialProps] = useState({
-    color: '#e4e3e3',
-    opacity: 0,
+    transmission: 1.0,
+    roughness: 0,
+    envMapImages: listOfImages,
+    envMapImage: '/images/img_4.png',
+    envMapIntensity: 1.0,
   });
 
   useEffect(() => {
     const guiOne = new GUI({
       width: 350,
-      title: 'LEFT - THIRD FROM THE TOP'
+      title: 'LEFT - FIRST FROM THE TOP'
     });
     // Position the GUI
     guiOne.domElement.style.position = 'absolute';
@@ -118,8 +116,7 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
         setIsFacingUser(isFacingUser);
       });
 
-
-      // TEXT FOLDER
+    // TEXT FOLDER
     const textFolder = guiOne.addFolder('Text');
     textFolderRef.current = textFolder;
     // textFolderRef.current.open();
@@ -140,7 +137,7 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
       .onChange((value: string) => {
         setTextMaterialProps(prev => ({ ...prev, color: value }));
       });
-
+    
     textControllersRef.current.metalnessController = textFolder
       .add(localTextProps, 'metalness', 0, 1, 0.01)
       .name('Metalness')
@@ -176,111 +173,82 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
         setTextMaterialProps(prev => ({ ...prev, opacity: value }));
       });
 
-
     // CUSHION FOLDER
     const cushionFolder = guiOne.addFolder('Cushion');
-    cushionFolderRef.current = cushionFolder;
+    cushionRef.current = cushionFolder;
+    // cushionRef.current.open();
 
     const localCushionProps = {
-      color: cushionMaterialProps.color,
-      opacity: cushionMaterialProps.opacity,
-      roughness: cushionMaterialProps.roughness,
-      metalness: cushionMaterialProps.metalness,
-      envMapIntensity: cushionMaterialProps.envMapIntensity,
-      emissive: cushionMaterialProps.emissive,
-      emissiveIntensity: cushionMaterialProps.emissiveIntensity,
-      envMapImages: cushionMaterialProps.envMapImages,
-      envMapImage: cushionMaterialProps.envMapImage,
+      noise: cushionMaterialProps.noise,
+      speed: cushionMaterialProps.speed,
+      oscillationFrequency: cushionMaterialProps.oscillationFrequency,
     }
 
     // add controls for each property
-    cushionControllersRef.current.envMapImageController = cushionFolder
-    .add(localCushionProps, 'envMapImage', cushionMaterialProps.envMapImages) // Passing the array creates a dropdown.
-    .name('Env Map Image')
-    .onChange((selectedImage: string) => {
-      // Update your material props with the selected image directly.
-      setCushionMaterialProps((prev) => ({ ...prev, envMapImage: selectedImage }));
-    });
-
-    cushionControllersRef.current.envMapIntensityController = cushionFolder
-      .add(localCushionProps, 'envMapIntensity', 0, 1, 0.01)
-      .name('Env Map Intensity')
-      .onChange((envMapIntensity: number) => {
-        setCushionMaterialProps((prev) => ({ ...prev, envMapIntensity }));
+    cushionControllersRef.current.noiseController = cushionFolder
+      .add(localCushionProps, 'noise', 0, 5, 0.01)
+      .name('Noise')
+      .onChange((value: number) => {
+        setCushionMaterialProps(prev => ({ ...prev, noise: value }));
       });
 
+    cushionControllersRef.current.speedController = cushionFolder
+      .add(localCushionProps, 'speed', 0, 2, 0.001)
+      .name('Speed')
+      .onChange((value: number) => {
+        setCushionMaterialProps(prev => ({ ...prev, speed: value }));
+      });
 
-    cushionControllersRef.current.colorController = cushionFolder
-      .addColor(localCushionProps, 'color')
-      .name('Color')
-      .onChange((color: string) => {
-        setCushionMaterialProps((prev) => ({ ...prev, color }));
+    cushionControllersRef.current.oscillationFrequencyController = cushionFolder
+      .add(localCushionProps, 'oscillationFrequency', 0, 20, 0.1)
+      .name('Oscillation Frequency')
+      .onChange((value: number) => {
+        setCushionMaterialProps(prev => ({ ...prev, oscillationFrequency: value }));
       });
     
-    cushionControllersRef.current.metalnessController = cushionFolder
-      .add(localCushionProps, 'metalness', 0, 1, 0.01)
-      .name('Metalness')
-      .onChange((metalness: number) => {
-        setCushionMaterialProps((prev) => ({ ...prev, metalness }));
-      });
-
-    cushionControllersRef.current.roughnessController = cushionFolder
-      .add(localCushionProps, 'roughness', 0, 1, 0.01)
-      .name('Roughness')
-      .onChange((roughness: number) => {
-        setCushionMaterialProps((prev) => ({ ...prev, roughness }));
-      });
-
-    cushionControllersRef.current.emissiveController = cushionFolder
-      .addColor(localCushionProps, 'emissive')
-      .name('Emissive')
-      .onChange((emissive: string) => {
-        setCushionMaterialProps((prev) => ({ ...prev, emissive }));
-      });
-
-    cushionControllersRef.current.emissiveIntensityController = cushionFolder
-      .add(localCushionProps, 'emissiveIntensity', 0, 1, 0.01)
-      .name('Emissive Intensity')
-      .onChange((emissiveIntensity: number) => {
-        setCushionMaterialProps((prev) => ({ ...prev, emissiveIntensity }));
-      });
-    
-    cushionControllersRef.current.opacityController = cushionFolder
-      .add(localCushionProps, 'opacity', 0, 1, 0.01)
-      .name('Opacity')
-      .onChange((opacity: number) => {
-        setCushionMaterialProps((prev) => ({ ...prev, opacity }));
-      });
-
     // CUSHION COVER FOLDER
     const cushionCoverFolder = guiOne.addFolder('Cushion Cover');
-    cushionCoverFolderRef.current = cushionCoverFolder;
+    cushionCoverRef.current = cushionCoverFolder;
 
     const localCushionCoverProps = {
-      color: cushionCoverMaterialProps.color,
-      opacity: cushionCoverMaterialProps.opacity,
+      transmission: cushionCoverMaterialProps.transmission,
+      roughness: cushionCoverMaterialProps.roughness,
+      envMapImage: cushionCoverMaterialProps.envMapImage,
+      envMapIntensity: cushionCoverMaterialProps.envMapIntensity,
     }
 
     // add controls for each property
-    cushionCoverControllersRef.current.colorController = cushionCoverFolder
-      .addColor(localCushionCoverProps, 'color')
-      .name('Color')
-      .onChange((color: string) => {
-        setCushionCoverMaterialProps((prev) => ({ ...prev, color }));
+    cushionCoverControllersRef.current.transmissionController = cushionCoverFolder
+      .add(localCushionCoverProps, 'transmission', 0, 1, 0.01)
+      .name('Transmission')
+      .onChange((value: number) => {
+        setCushionCoverMaterialProps(prev => ({ ...prev, transmission: value }));
       });
 
-    cushionCoverControllersRef.current.opacityController = cushionCoverFolder
-      .add(localCushionCoverProps, 'opacity', 0, 1, 0.01)
-      .name('Opacity')
-      .onChange((opacity: number) => {
-        setCushionCoverMaterialProps((prev) => ({ ...prev, opacity }));
+    cushionCoverControllersRef.current.roughnessController = cushionCoverFolder
+      .add(localCushionCoverProps, 'roughness', 0, 1, 0.01)
+      .name('Roughness')
+      .onChange((value: number) => {
+        setCushionCoverMaterialProps(prev => ({ ...prev, roughness: value }));
+      });
+
+    cushionCoverControllersRef.current.envMapImageController = cushionCoverFolder
+      .add(localCushionCoverProps, 'envMapImage', listOfImages)
+      .name('Env Map Image')
+      .onChange((value: string) => {
+        setCushionCoverMaterialProps(prev => ({ ...prev, envMapImage: value }));
+      });
+
+    cushionCoverControllersRef.current.envMapIntensityController = cushionCoverFolder
+      .add(localCushionCoverProps, 'envMapIntensity', 0, 2, 0.01)
+      .name('Env Map Intensity')
+      .onChange((value: number) => {
+        setCushionCoverMaterialProps(prev => ({ ...prev, envMapIntensity: value }));
       });
     
-
     return () => {
       guiOne.destroy();
     }
-
   }, []);
 
   return (
@@ -288,6 +256,8 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
       <Text text={'28'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Ni'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Nickel'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.7} depth={0.5} textMaterialProps={textMaterialProps} />
+
+      
 
       <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />

@@ -15,20 +15,20 @@ interface Props {
   guiy: string;
 }
 
-function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
-  const logoSevenGroupRef = useRef<Group>(null);
+function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
+  const logoThreeGroupRef = useRef<Group>(null);
 
   // Set the initial rotation on mount only
   useEffect(() => {
-    if (logoSevenGroupRef.current) {
-      logoSevenGroupRef.current.rotation.y = isFacingUser ? 0 : Math.PI;
+    if (logoThreeGroupRef.current) {
+      logoThreeGroupRef.current.rotation.y = isFacingUser ? 0 : Math.PI;
     }
   }, [isFacingUser]);
 
   useFrame((state, delta) => {
-      if (logoSevenGroupRef.current) {
+      if (logoThreeGroupRef.current) {
         // Apply a "breathing" effect on the X axis.
-        logoSevenGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
+        logoThreeGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
   
         // Determine the starting rotation.
         const initialRotation = isFacingUser ? 0 : Math.PI;
@@ -40,15 +40,15 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
         const lerpFactor = 1 - Math.exp(-speed * delta);
         
         // Interpolate the current rotation towards the target rotation.
-        logoSevenGroupRef.current.rotation.y = MathUtils.lerp(
-          logoSevenGroupRef.current.rotation.y,
+        logoThreeGroupRef.current.rotation.y = MathUtils.lerp(
+          logoThreeGroupRef.current.rotation.y,
           targetY,
           lerpFactor
         );
   
         // Optionally, snap to target if very close.
-        if (Math.abs(logoSevenGroupRef.current.rotation.y - targetY) < 0.001) {
-          logoSevenGroupRef.current.rotation.y = targetY;
+        if (Math.abs(logoThreeGroupRef.current.rotation.y - targetY) < 0.001) {
+          logoThreeGroupRef.current.rotation.y = targetY;
         }
       }
     });
@@ -57,50 +57,53 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const rotationFolderRef = useRef<GUI | null>(null);
   const rotationControllersRef = useRef<Record<string, any>>({});
 
-  // TEXT GUI REFS
+  // // TEXT BOLD GUI REFS
   const textFolderRef = useRef<GUI | null>(null);
   const textControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [textMaterialProps, setTextMaterialProps] = useState({
-    color: '#fff',
+    color: '#c0c0c0',
+    metalness: 1,
+    roughness: 0.15,
+    reflectivity: 1,
+    clearcoat: 1,     // Adds a clear coat layer
+    clearcoatRoughness: 0.1,
     opacity: 1.0,
-    roughness: 0.2,       
-    metalness: 0.2,
-    emissive: '#fff',
-    emissiveIntensity: 0.2,
   });
 
-  // CUSHION SHADER GUI REFS
-  const cushionRef = useRef<GUI | null>(null);
+  // CUSHION GUI REFS
+  const cushionFolderRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({});
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    noise: 1.0,
-    speed: 0.15,
-    oscillationFrequency: 11.0,
+    noiseSwirlSteps: 2,
+    noiseSwirlValue: 1.0,
+    noiseScale: 1.0,
+    noiseTimeScale: 0.05,
+    opacity: 0.3,
   });
 
   // CUSHION COVER GUI REFS
   const cushionCoverRef = useRef<GUI | null>(null);
   const cushionCoverControllersRef = useRef<Record<string, any>>({});
   const [cushionCoverMaterialProps, setCushionCoverMaterialProps] = useState({
-    transmission: 1.0,
+    transmission: 0.99,
     roughness: 0,
     envMapImages: listOfImages,
-    envMapImage: '/images/img_4.png',
+    envMapImage: '/images/bw_3.jpg',
     envMapIntensity: 1.0,
   });
 
   useEffect(() => {
-    const guiOne = new GUI({
+    const guiThree = new GUI({
       width: 350,
-      title: 'LEFT - FIRST FROM THE TOP'
+      title: 'LEFT - SECOND FROM THE TOP'
     });
     // Position the GUI
-    guiOne.domElement.style.position = 'absolute';
-    guiOne.domElement.style.left = '10px';
-    guiOne.domElement.style.top = guiy;
+    guiThree.domElement.style.position = 'absolute';
+    guiThree.domElement.style.left = '10px';
+    guiThree.domElement.style.top = guiy;
 
     // ROTATION FOLDER
-    const rotationFolder = guiOne.addFolder('Rotation');
+    const rotationFolder = guiThree.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;
 
     const localRotationProps = {
@@ -115,98 +118,118 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
         setIsFacingUser(isFacingUser);
       });
 
-    // TEXT FOLDER
-    const textFolder = guiOne.addFolder('Text');
+    // TEXT BOLD FOLDER
+    const textFolder = guiThree.addFolder('Text');
     textFolderRef.current = textFolder;
-    // textFolderRef.current.open();
-
     const localTextProps = {
       color: textMaterialProps.color,
-      opacity: textMaterialProps.opacity,
-      roughness: textMaterialProps.roughness,
       metalness: textMaterialProps.metalness,
-      emissive: textMaterialProps.emissive,
-      emissiveIntensity: textMaterialProps.emissiveIntensity,
-    }
+      roughness: textMaterialProps.roughness,
+      reflectivity: textMaterialProps.reflectivity,
+      clearcoat: textMaterialProps.clearcoat,
+      clearcoatRoughness: textMaterialProps.clearcoatRoughness,
+      opacity: textMaterialProps.opacity,
+    };
 
-    // add controls for each property
+    // Add controls for each property
     textControllersRef.current.colorController = textFolder
       .addColor(localTextProps, 'color')
       .name('Color')
       .onChange((value: string) => {
-        setTextMaterialProps(prev => ({ ...prev, color: value }));
+        setTextMaterialProps((prev) => ({ ...prev, color: value }));
       });
-    
+
     textControllersRef.current.metalnessController = textFolder
       .add(localTextProps, 'metalness', 0, 1, 0.01)
       .name('Metalness')
       .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, metalness: value }));
+        setTextMaterialProps((prev) => ({ ...prev, metalness: value }));
       });
 
     textControllersRef.current.roughnessController = textFolder
       .add(localTextProps, 'roughness', 0, 1, 0.01)
       .name('Roughness')
       .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, roughness: value }));
+        setTextMaterialProps((prev) => ({ ...prev, roughness: value }));
       });
 
-    textControllersRef.current.emissiveController = textFolder
-      .addColor(localTextProps, 'emissive')
-      .name('Emissive')
-      .onChange((value: string) => {
-        setTextMaterialProps(prev => ({ ...prev, emissive: value }));
-      });
-
-    textControllersRef.current.emissiveIntensityController = textFolder
-      .add(localTextProps, 'emissiveIntensity', 0, 1, 0.01)
-      .name('Emissive Intensity')
+    textControllersRef.current.reflectivityController = textFolder
+      .add(localTextProps, 'reflectivity', 0, 1, 0.01)
+      .name('Reflectivity')
       .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, emissiveIntensity: value }));
+        setTextMaterialProps((prev) => ({ ...prev, reflectivity: value }));
       });
-    
+
+    textControllersRef.current.clearcoatController = textFolder
+      .add(localTextProps, 'clearcoat', 0, 1, 0.01)
+      .name('Clearcoat')
+      .onChange((value: number) => {
+        setTextMaterialProps((prev) => ({ ...prev, clearcoat: value }));
+      });
+
+    textControllersRef.current.clearcoatRoughnessController = textFolder
+      .add(localTextProps, 'clearcoatRoughness', 0, 1, 0.01)
+      .name('Clearcoat Roughness')
+      .onChange((value: number) => {
+        setTextMaterialProps((prev) => ({ ...prev, clearcoatRoughness: value }));
+      });
+
     textControllersRef.current.opacityController = textFolder
       .add(localTextProps, 'opacity', 0, 1, 0.01)
       .name('Opacity')
       .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, opacity: value }));
-      });
-
-    // CUSHION FOLDER
-    const cushionFolder = guiOne.addFolder('Cushion');
-    cushionRef.current = cushionFolder;
-    // cushionRef.current.open();
-
-    const localCushionProps = {
-      noise: cushionMaterialProps.noise,
-      speed: cushionMaterialProps.speed,
-      oscillationFrequency: cushionMaterialProps.oscillationFrequency,
-    }
-
-    // add controls for each property
-    cushionControllersRef.current.noiseController = cushionFolder
-      .add(localCushionProps, 'noise', 0, 5, 0.01)
-      .name('Noise')
-      .onChange((value: number) => {
-        setCushionMaterialProps(prev => ({ ...prev, noise: value }));
-      });
-
-    cushionControllersRef.current.speedController = cushionFolder
-      .add(localCushionProps, 'speed', 0, 2, 0.001)
-      .name('Speed')
-      .onChange((value: number) => {
-        setCushionMaterialProps(prev => ({ ...prev, speed: value }));
-      });
-
-    cushionControllersRef.current.oscillationFrequencyController = cushionFolder
-      .add(localCushionProps, 'oscillationFrequency', 0, 20, 0.1)
-      .name('Oscillation Frequency')
-      .onChange((value: number) => {
-        setCushionMaterialProps(prev => ({ ...prev, oscillationFrequency: value }));
+        setTextMaterialProps((prev) => ({ ...prev, opacity: value }));
       });
     
-    // CUSHION COVER FOLDER
-    const cushionCoverFolder = guiOne.addFolder('Cushion Cover');
+    // CUSHION FOLDER
+    const cushionFolder = guiThree.addFolder('Cushion');
+    cushionFolderRef.current = cushionFolder;
+    const localCushionProps = {
+      noiseSwirlSteps: cushionMaterialProps.noiseSwirlSteps,
+      noiseSwirlValue: cushionMaterialProps.noiseSwirlValue,
+      noiseScale: cushionMaterialProps.noiseScale,
+      noiseTimeScale: cushionMaterialProps.noiseTimeScale,
+      opacity: cushionMaterialProps.opacity,
+    };
+
+    // Add controls for each property
+    cushionControllersRef.current.noiseSwirlStepsController = cushionFolder
+      .add(localCushionProps, 'noiseSwirlSteps', 0, 10, 1)
+      .name('Noise Swirl Steps')
+      .onChange((value: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, noiseSwirlSteps: value }));
+      });
+
+    cushionControllersRef.current.noiseSwirlValueController = cushionFolder
+      .add(localCushionProps, 'noiseSwirlValue', 0, 5, 0.1)
+      .name('Noise Swirl Value')
+      .onChange((value: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, noiseSwirlValue: value }));
+      });
+
+    cushionControllersRef.current.noiseScaleController = cushionFolder
+      .add(localCushionProps, 'noiseScale', 0, 5, 0.1)
+      .name('Noise Scale')
+      .onChange((value: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, noiseScale: value }));
+      });
+
+    cushionControllersRef.current.noiseTimeScaleController = cushionFolder
+      .add(localCushionProps, 'noiseTimeScale', 0, 1, 0.01)
+      .name('Noise Time Scale')
+      .onChange((value: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, noiseTimeScale: value }));
+      });
+
+    cushionControllersRef.current.opacityController = cushionFolder
+      .add(localCushionProps, 'opacity', 0, 1, 0.01)
+      .name('Opacity')
+      .onChange((value: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, opacity: value }));
+      });
+
+      // CUSHION COVER FOLDER
+    const cushionCoverFolder = guiThree.addFolder('Cushion Cover');
     cushionCoverRef.current = cushionCoverFolder;
 
     const localCushionCoverProps = {
@@ -246,20 +269,26 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
     
     return () => {
-      guiOne.destroy();
+      guiThree.destroy();
     }
   }, []);
 
   return (
-    <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoSevenGroupRef}>
-      <Text text={'110'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Ds'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Darmstadtium'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
+    <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoThreeGroupRef}>
+      {/* <DeloitteDigitalLogoGroup
+        textMaterialProps={textMaterialProps}
+        textLightMaterialProps={textLightMaterialProps}
+        sphereMaterialProps={sphereMaterialProps}
+      /> */}
+      <Text text={'46'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Pd'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Palladium'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.55} depth={0.5} textMaterialProps={textMaterialProps} />
 
+      {/* <Text text={'DP&I'} position={[0, 0, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.8} depth={0.5} textMaterialProps={textMaterialProps} /> */}
       <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
     </group>    
   );
 }
 
-export default LogoSevenGroup;
+export default LogoThreeGroup;

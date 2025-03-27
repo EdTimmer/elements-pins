@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { GUI } from 'lil-gui';
 import Text from './Text';
 import Cushion from './Cushion';
+import { Sparkles } from '@react-three/drei';
 
 interface Props {
   isMouseEntered: boolean;
@@ -13,20 +14,20 @@ interface Props {
   guiy: string;
 }
 
-function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
-  const logoThreeGroupRef = useRef<Group>(null);
+function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
+  const logoEightGroupRef = useRef<Group>(null);
 
   // Set the initial rotation on mount only
   useEffect(() => {
-    if (logoThreeGroupRef.current) {
-      logoThreeGroupRef.current.rotation.y = isFacingUser ? 0 : Math.PI;
+    if (logoEightGroupRef.current) {
+      logoEightGroupRef.current.rotation.y = isFacingUser ? 0 : Math.PI;
     }
   }, [isFacingUser]);
 
   useFrame((state, delta) => {
-    if (logoThreeGroupRef.current) {
+    if (logoEightGroupRef.current) {
       // Apply a "breathing" effect on the X axis.
-      logoThreeGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
+      logoEightGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
 
       // Determine the starting rotation.
       const initialRotation = isFacingUser ? 0 : Math.PI;
@@ -38,15 +39,15 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       const lerpFactor = 1 - Math.exp(-speed * delta);
       
       // Interpolate the current rotation towards the target rotation.
-      logoThreeGroupRef.current.rotation.y = MathUtils.lerp(
-        logoThreeGroupRef.current.rotation.y,
+      logoEightGroupRef.current.rotation.y = MathUtils.lerp(
+        logoEightGroupRef.current.rotation.y,
         targetY,
         lerpFactor
       );
 
       // Optionally, snap to target if very close.
-      if (Math.abs(logoThreeGroupRef.current.rotation.y - targetY) < 0.001) {
-        logoThreeGroupRef.current.rotation.y = targetY;
+      if (Math.abs(logoEightGroupRef.current.rotation.y - targetY) < 0.001) {
+        logoEightGroupRef.current.rotation.y = targetY;
       }
     }
   });
@@ -54,6 +55,19 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   // ROTATION GUI REFS
   const rotationFolderRef = useRef<GUI | null>(null);
   const rotationControllersRef = useRef<Record<string, any>>({});
+
+    // SPARKLES GUI REFS
+    const sparklesFolderRef = useRef<GUI | null>(null);
+    const sparklesControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
+    const [sparklesProps, setSparklesProps] = useState({
+      color: '#ffffff',
+      count: 20,
+      scale: 3,
+      size: 10,
+      speed: 0.4,
+      opacity: 1.0,
+      noise: 0.1,
+    });
 
   // TEXT GUI REFS
   const textFolderRef = useRef<GUI | null>(null);
@@ -80,17 +94,17 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   });
 
   useEffect(() => {
-    const guiThree = new GUI({
+    const guiEight = new GUI({
       width: 350,
       title: 'RIGHT - THIRD FROM THE TOP'
     });
     // Position the GUI
-    guiThree.domElement.style.position = 'absolute';
-    guiThree.domElement.style.right = '10px';
-    guiThree.domElement.style.top = guiy;
+    guiEight.domElement.style.position = 'absolute';
+    guiEight.domElement.style.right = '10px';
+    guiEight.domElement.style.top = guiy;
 
     // ROTATION FOLDER
-    const rotationFolder = guiThree.addFolder('Rotation');
+    const rotationFolder = guiEight.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;
 
     const localRotationProps = {
@@ -105,8 +119,71 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       setIsFacingUser(isFacingUser);
     });
 
+    // SPARKLES FOLDER
+    const sparklesFolder = guiEight.addFolder('Sparkles');
+    sparklesFolderRef.current = sparklesFolder;
+    const localSparklesProps = {
+      count: sparklesProps.count,
+      scale: sparklesProps.scale,
+      size: sparklesProps.size,
+      speed: sparklesProps.speed,
+      noise: sparklesProps.noise,
+      opacity: sparklesProps.opacity,
+      color: sparklesProps.color,
+    };
+
+    // Add controls for each property
+    sparklesControllersRef.current.colorController = sparklesFolder
+      .addColor(localSparklesProps, 'color')
+      .name('Color')
+      .onChange((value: string) => {
+        setSparklesProps((prev) => ({ ...prev, color: value }));
+      });
+
+    sparklesControllersRef.current.countController = sparklesFolder
+      .add(localSparklesProps, 'count', 0, 100, 1)
+      .name('Count')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, count: value }));
+      });
+
+    sparklesControllersRef.current.scaleController = sparklesFolder
+      .add(localSparklesProps, 'scale', 0, 10, 0.1)
+      .name('Scale')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, scale: value }));
+      });
+
+    sparklesControllersRef.current.sizeController = sparklesFolder
+      .add(localSparklesProps, 'size', 0, 100, 1)
+      .name('Size')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, size: value }));
+      });
+
+    sparklesControllersRef.current.speedController = sparklesFolder
+      .add(localSparklesProps, 'speed', 0, 1, 0.01)
+      .name('Speed')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, speed: value }));
+      });
+
+    sparklesControllersRef.current.noiseController = sparklesFolder
+      .add(localSparklesProps, 'noise', 0, 1, 0.01)
+      .name('Noise')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, noise: value }));
+      });
+
+    sparklesControllersRef.current.opacityController = sparklesFolder
+      .add(localSparklesProps, 'opacity', 0, 1, 0.01)
+      .name('Opacity')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, opacity: value }));
+      });
+
     // TEXT FOLDER
-    const textFolder = guiThree.addFolder('Text');
+    const textFolder = guiEight.addFolder('Text');
     textFolderRef.current = textFolder;
     // textFolderRef.current.open();
 
@@ -163,7 +240,7 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
 
     // CUSHION FOLDER
-    const cushionFolder = guiThree.addFolder('Cushion');
+    const cushionFolder = guiEight.addFolder('Cushion');
     cushionFolderRef.current = cushionFolder;
     // cushionFolderRef.current.open();
 
@@ -220,20 +297,29 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
     
     return () => {
-      guiThree.destroy();
+      guiEight.destroy();
     };
 
   }, []);
 
   return (
-    <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoThreeGroupRef}>
-      <Text text={'46'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Pd'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Palladium'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.55} depth={0.5} textMaterialProps={textMaterialProps} />
-
+    <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoEightGroupRef}>
+      <Text text={'111'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Rg'} position={[0, -0.25, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Roentgenium'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
+      <Sparkles
+        key={sparklesProps.count}
+        color={sparklesProps.color}
+        count={sparklesProps.count}
+        scale={sparklesProps.scale}
+        size={sparklesProps.size}
+        speed={sparklesProps.speed}
+        opacity={sparklesProps.opacity}
+        noise={sparklesProps.noise}
+      />
     </group>    
   );
 }
 
-export default LogoThreeGroup;
+export default LogoEightGroup;
