@@ -3,6 +3,7 @@ import {
   AppMiddleColumn,
   CenterSectionWrapper,
   Row,
+  RowOne,
 } from './App.styles'
 
 import LogoSixWrapper from './components/LogoSix/LogoSixWrapper';
@@ -19,10 +20,10 @@ function App() {
     <AppWrapper>
       <AppMiddleColumn>
         <CenterSectionWrapper>
-          <Row>
+          <RowOne>
             <LogoOneWrapper guiy={'10px'} />        
             <LogoTwoWrapper guiy={'10px'} />
-          </Row>
+          </RowOne>
 
           <Row>
             <LogoThreeWrapper guiy={'500px'} />

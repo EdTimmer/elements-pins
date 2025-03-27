@@ -73,15 +73,15 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const cushionFolderRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    color: '#faf3e7',
-    opacity: 1.0,
-    roughness: 0,     
+    color: '#fff',
     metalness: 1.0,
-    envMapIntensity: 0.25,
-    emissive: '#fff',
+    roughness: 0,
+    opacity: 1,
+    emissive: '#000',
     emissiveIntensity: 0,
+    envMapIntensity: 0.2,
     envMapImages: listOfImages,
-    envMapImage: '/images/silver_6.jpg',
+    envMapImage: '/images/silver_4.jpg',
   });
 
   // CUSHION COVERAGE GUI REFS
@@ -89,21 +89,21 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const cushionCoverControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionCoverMaterialProps, setCushionCoverMaterialProps] = useState({
     color: '#e4e3e3',
-    opacity: 0.3,
+    opacity: 0,
   });
 
   useEffect(() => {
-    const guiFive = new GUI({
+    const guiSeven = new GUI({
       width: 350,
       title: 'LEFT - THIRD FROM THE TOP'
     });
     // Position the GUI
-    guiFive.domElement.style.position = 'absolute';
-    guiFive.domElement.style.left = '10px';
-    guiFive.domElement.style.top = guiy;
+    guiSeven.domElement.style.position = 'absolute';
+    guiSeven.domElement.style.left = '10px';
+    guiSeven.domElement.style.top = guiy;
 
     // ROTATION FOLDER
-    const rotationFolder = guiFive.addFolder('Rotation');
+    const rotationFolder = guiSeven.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;
 
     const localRotationProps = {
@@ -120,7 +120,7 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
 
 
       // TEXT FOLDER
-    const textFolder = guiFive.addFolder('Text');
+    const textFolder = guiSeven.addFolder('Text');
     textFolderRef.current = textFolder;
     // textFolderRef.current.open();
 
@@ -178,7 +178,7 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
 
 
     // CUSHION FOLDER
-    const cushionFolder = guiFive.addFolder('Cushion');
+    const cushionFolder = guiSeven.addFolder('Cushion');
     cushionFolderRef.current = cushionFolder;
 
     const localCushionProps = {
@@ -253,7 +253,7 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
 
     // CUSHION COVER FOLDER
-    const cushionCoverFolder = guiFive.addFolder('Cushion Cover');
+    const cushionCoverFolder = guiSeven.addFolder('Cushion Cover');
     cushionCoverFolderRef.current = cushionCoverFolder;
 
     const localCushionCoverProps = {
@@ -278,7 +278,7 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
     
 
     return () => {
-      guiFive.destroy();
+      guiSeven.destroy();
     }
 
   }, []);

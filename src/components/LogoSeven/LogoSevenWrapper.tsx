@@ -39,10 +39,10 @@ const LogoFiveWrapper = ({guiy}: Props) => {
     >
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
-        <ambientLight intensity={1} />
+        <ambientLight intensity={0.5} />
         <LogoSevenGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
         {/* <directionalLight position={[2, 5, 5]} intensity={1} /> */}
-        <directionalLight position={[2, -5, 5]} intensity={1} />
+        <directionalLight position={[5, -5, 5]} intensity={1} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        

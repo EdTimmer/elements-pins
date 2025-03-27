@@ -7,7 +7,7 @@ export const AppWrapper = styled.div`
   font-family: 'Roboto Mono', monospace;
   padding: 0 370px;
   width: 100%;
-  height: 1800px;
+  height: 2800px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,7 +19,7 @@ export const AppWrapper = styled.div`
 export const AppMiddleColumn = styled.div`
   position: relative;
   z-index: 1;
-  margin: 10px 0;
+  margin: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -35,7 +35,18 @@ export const CenterSectionWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
+`;
+
+export const RowOne = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: -80px;
+  margin-bottom: -100px;
+  padding: 0;
+  flex-wrap: wrap;
 `;
 
 export const Row = styled.div`

@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { GUI } from 'lil-gui';
 import Text from './Text';
 import Cushion from './Cushion';
+import { Sparkles } from '@react-three/drei';
 
 interface Props {
   isMouseEntered: boolean;
@@ -55,6 +56,19 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const rotationFolderRef = useRef<GUI | null>(null);
   const rotationControllersRef = useRef<Record<string, any>>({});
 
+    // SPARKLES GUI REFS
+    const sparklesFolderRef = useRef<GUI | null>(null);
+    const sparklesControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
+    const [sparklesProps, setSparklesProps] = useState({
+      color: '#ffffff',
+      count: 20,
+      scale: 3,
+      size: 10,
+      speed: 0.4,
+      opacity: 1.0,
+      noise: 0.1,
+    });
+
   // TEXT GUI REFS
   const textFolderRef = useRef<GUI | null>(null);
   const textControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
@@ -71,26 +85,26 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const cushionFolderRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    color: '#000',
-    opacity: 1,
-    roughness: 0.15,     
-    metalness: 0.65,
+    color: '#5c5c5c',
+    opacity: 1.0,
+    roughness: 0.5,     
+    metalness: 0.8,
     emissive: '#fff',
     emissiveIntensity: 0,
   });
 
   useEffect(() => {
-    const guiSix = new GUI({
+    const guiEight = new GUI({
       width: 350,
       title: 'RIGHT - THIRD FROM THE TOP'
     });
     // Position the GUI
-    guiSix.domElement.style.position = 'absolute';
-    guiSix.domElement.style.right = '10px';
-    guiSix.domElement.style.top = guiy;
+    guiEight.domElement.style.position = 'absolute';
+    guiEight.domElement.style.right = '10px';
+    guiEight.domElement.style.top = guiy;
 
     // ROTATION FOLDER
-    const rotationFolder = guiSix.addFolder('Rotation');
+    const rotationFolder = guiEight.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;
 
     const localRotationProps = {
@@ -103,10 +117,73 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
     .name('Is Facing User')
     .onChange((isFacingUser: boolean) => {
       setIsFacingUser(isFacingUser);
-    });  
+    });
+
+    // SPARKLES FOLDER
+    const sparklesFolder = guiEight.addFolder('Sparkles');
+    sparklesFolderRef.current = sparklesFolder;
+    const localSparklesProps = {
+      count: sparklesProps.count,
+      scale: sparklesProps.scale,
+      size: sparklesProps.size,
+      speed: sparklesProps.speed,
+      noise: sparklesProps.noise,
+      opacity: sparklesProps.opacity,
+      color: sparklesProps.color,
+    };
+
+    // Add controls for each property
+    sparklesControllersRef.current.colorController = sparklesFolder
+      .addColor(localSparklesProps, 'color')
+      .name('Color')
+      .onChange((value: string) => {
+        setSparklesProps((prev) => ({ ...prev, color: value }));
+      });
+
+    sparklesControllersRef.current.countController = sparklesFolder
+      .add(localSparklesProps, 'count', 0, 100, 1)
+      .name('Count')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, count: value }));
+      });
+
+    sparklesControllersRef.current.scaleController = sparklesFolder
+      .add(localSparklesProps, 'scale', 0, 10, 0.1)
+      .name('Scale')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, scale: value }));
+      });
+
+    sparklesControllersRef.current.sizeController = sparklesFolder
+      .add(localSparklesProps, 'size', 0, 100, 1)
+      .name('Size')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, size: value }));
+      });
+
+    sparklesControllersRef.current.speedController = sparklesFolder
+      .add(localSparklesProps, 'speed', 0, 1, 0.01)
+      .name('Speed')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, speed: value }));
+      });
+
+    sparklesControllersRef.current.noiseController = sparklesFolder
+      .add(localSparklesProps, 'noise', 0, 1, 0.01)
+      .name('Noise')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, noise: value }));
+      });
+
+    sparklesControllersRef.current.opacityController = sparklesFolder
+      .add(localSparklesProps, 'opacity', 0, 1, 0.01)
+      .name('Opacity')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, opacity: value }));
+      });
 
     // TEXT FOLDER
-    const textFolder = guiSix.addFolder('Text');
+    const textFolder = guiEight.addFolder('Text');
     textFolderRef.current = textFolder;
     // textFolderRef.current.open();
 
@@ -163,7 +240,7 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
 
     // CUSHION FOLDER
-    const cushionFolder = guiSix.addFolder('Cushion');
+    const cushionFolder = guiEight.addFolder('Cushion');
     cushionFolderRef.current = cushionFolder;
     // cushionFolderRef.current.open();
 
@@ -220,7 +297,7 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
     
     return () => {
-      guiSix.destroy();
+      guiEight.destroy();
     };
 
   }, []);
@@ -231,6 +308,16 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       <Text text={'Rg'} position={[0, -0.25, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Roentgenium'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
+      <Sparkles
+        key={sparklesProps.count}
+        color={sparklesProps.color}
+        count={sparklesProps.count}
+        scale={sparklesProps.scale}
+        size={sparklesProps.size}
+        speed={sparklesProps.speed}
+        opacity={sparklesProps.opacity}
+        noise={sparklesProps.noise}
+      />
     </group>    
   );
 }
