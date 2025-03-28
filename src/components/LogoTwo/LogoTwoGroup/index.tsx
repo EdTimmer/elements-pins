@@ -74,15 +74,15 @@ function LogoTwoGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   const cushionFolderRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    color: '#000',
+    color: '#fff',
     opacity: 1.0,
-    roughness: 0,     
-    metalness: 0,
+    roughness: 0.14,     
+    metalness: 1.0,
     emissive: '#fff',
-    emissiveIntensity: 0.01,
-    envMapIntensity: 1.0,
+    emissiveIntensity: 0,
+    envMapIntensity: 0.05,
     envMapImages: listOfImages,
-    envMapImage: '/images/bw_1.png',
+    envMapImage: '/images/copper_1.jpg',
   });
 
   // CUSHION COVER GUI REFS
@@ -90,13 +90,13 @@ function LogoTwoGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   const cushionCoverControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionCoverMaterialProps, setCushionCoverMaterialProps] = useState({
     color: '#e4e3e3',
-    opacity: 0.3,
+    opacity: 0,
   });
 
   useEffect(() => {
     const guiTwo = new GUI({
       width: 350,
-      title: 'RIGHT - FIRST FROM THE TOP'
+      title: 'Cu - Copper'
     });
     // Position the GUI
     guiTwo.domElement.style.position = 'absolute';

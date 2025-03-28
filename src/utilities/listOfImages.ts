@@ -6,6 +6,7 @@ export const listOfImages = [
   '/images/bw_6.png',
   '/images/bw_7.jpg',
   '/images/bw_8.jpg',
+  '/images/copper_1.jpg',
   '/images/flower.jpg',
   '/images/oil-blue.jpg',
   '/images/rainbow_1.jpg',

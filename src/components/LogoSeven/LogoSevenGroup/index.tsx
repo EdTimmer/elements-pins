@@ -6,7 +6,7 @@ import { GUI } from 'lil-gui';
 import Cushion from './Cushion';
 import Text from './Text';
 import CushionCover from './CushionCover';
-import { listOfImages } from '../../../utilities/listOfImages';
+import { Sparkles } from '@react-three/drei';
 
 interface Props {
   isMouseEntered: boolean;
@@ -57,50 +57,61 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const rotationFolderRef = useRef<GUI | null>(null);
   const rotationControllersRef = useRef<Record<string, any>>({});
 
+  // SPARKLES GUI REFS
+  const sparklesFolderRef = useRef<GUI | null>(null);
+  const sparklesControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
+  const [sparklesProps, setSparklesProps] = useState({
+    color: '#ffffff',
+    count: 20,
+    scale: 3,
+    size: 10,
+    speed: 0.4,
+    opacity: 1.0,
+    noise: 0.1,
+  });
+
   // TEXT GUI REFS
   const textFolderRef = useRef<GUI | null>(null);
   const textControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [textMaterialProps, setTextMaterialProps] = useState({
-    color: '#fff',
+    color: '#c0c0c0',
+    metalness: 1,
+    roughness: 0.15,
+    reflectivity: 1,
+    clearcoat: 1,
+    clearcoatRoughness: 0.1,
     opacity: 1.0,
-    roughness: 0.2,       
-    metalness: 0.2,
-    emissive: '#fff',
-    emissiveIntensity: 0.2,
   });
 
   // CUSHION SHADER GUI REFS
   const cushionRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({});
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    noise: 1.0,
-    speed: 0.15,
-    oscillationFrequency: 11.0,
+    noise: 5.0,
+    speed: 0.3,
+    oscillationFrequency: 3.2,
   });
 
-  // CUSHION COVER GUI REFS
-  const cushionCoverRef = useRef<GUI | null>(null);
-  const cushionCoverControllersRef = useRef<Record<string, any>>({});
+  // CUSHION COVERAGE GUI REFS
+  const cushionCoverFolderRef = useRef<GUI | null>(null);
+  const cushionCoverControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionCoverMaterialProps, setCushionCoverMaterialProps] = useState({
-    transmission: 1.0,
-    roughness: 0,
-    envMapImages: listOfImages,
-    envMapImage: '/images/img_4.png',
-    envMapIntensity: 1.0,
+    color: '#e4e3e3',
+    opacity: 0.3,
   });
 
   useEffect(() => {
-    const guiOne = new GUI({
+    const guiSeven = new GUI({
       width: 350,
-      title: 'LEFT - FIRST FROM THE TOP'
+      title: 'Ds - Darmstadtium',
     });
     // Position the GUI
-    guiOne.domElement.style.position = 'absolute';
-    guiOne.domElement.style.left = '10px';
-    guiOne.domElement.style.top = guiy;
+    guiSeven.domElement.style.position = 'absolute';
+    guiSeven.domElement.style.left = '10px';
+    guiSeven.domElement.style.top = guiy;
 
     // ROTATION FOLDER
-    const rotationFolder = guiOne.addFolder('Rotation');
+    const rotationFolder = guiSeven.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;
 
     const localRotationProps = {
@@ -115,65 +126,135 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
         setIsFacingUser(isFacingUser);
       });
 
+          // SPARKLES FOLDER
+    const sparklesFolder = guiSeven.addFolder('Sparkles');
+    sparklesFolderRef.current = sparklesFolder;
+    const localSparklesProps = {
+      count: sparklesProps.count,
+      scale: sparklesProps.scale,
+      size: sparklesProps.size,
+      speed: sparklesProps.speed,
+      noise: sparklesProps.noise,
+      opacity: sparklesProps.opacity,
+      color: sparklesProps.color,
+    };
+
+    // Add controls for each property
+    sparklesControllersRef.current.colorController = sparklesFolder
+      .addColor(localSparklesProps, 'color')
+      .name('Color')
+      .onChange((value: string) => {
+        setSparklesProps((prev) => ({ ...prev, color: value }));
+      });
+
+    sparklesControllersRef.current.countController = sparklesFolder
+      .add(localSparklesProps, 'count', 0, 100, 1)
+      .name('Count')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, count: value }));
+      });
+
+    sparklesControllersRef.current.scaleController = sparklesFolder
+      .add(localSparklesProps, 'scale', 0, 10, 0.1)
+      .name('Scale')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, scale: value }));
+      });
+
+    sparklesControllersRef.current.sizeController = sparklesFolder
+      .add(localSparklesProps, 'size', 0, 100, 1)
+      .name('Size')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, size: value }));
+      });
+
+    sparklesControllersRef.current.speedController = sparklesFolder
+      .add(localSparklesProps, 'speed', 0, 1, 0.01)
+      .name('Speed')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, speed: value }));
+      });
+
+    sparklesControllersRef.current.noiseController = sparklesFolder
+      .add(localSparklesProps, 'noise', 0, 1, 0.01)
+      .name('Noise')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, noise: value }));
+      });
+
+    sparklesControllersRef.current.opacityController = sparklesFolder
+      .add(localSparklesProps, 'opacity', 0, 1, 0.01)
+      .name('Opacity')
+      .onChange((value: number) => {
+        setSparklesProps((prev) => ({ ...prev, opacity: value }));
+      });
+
     // TEXT FOLDER
-    const textFolder = guiOne.addFolder('Text');
+    const textFolder = guiSeven.addFolder('Text');
     textFolderRef.current = textFolder;
     // textFolderRef.current.open();
 
     const localTextProps = {
       color: textMaterialProps.color,
-      opacity: textMaterialProps.opacity,
-      roughness: textMaterialProps.roughness,
       metalness: textMaterialProps.metalness,
-      emissive: textMaterialProps.emissive,
-      emissiveIntensity: textMaterialProps.emissiveIntensity,
-    }
-
-    // add controls for each property
+      roughness: textMaterialProps.roughness,
+      reflectivity: textMaterialProps.reflectivity,
+      clearcoat: textMaterialProps.clearcoat,
+      clearcoatRoughness: textMaterialProps.clearcoatRoughness,
+      opacity: textMaterialProps.opacity,
+    };
+    // Add controls for each property
     textControllersRef.current.colorController = textFolder
-      .addColor(localTextProps, 'color')
-      .name('Color')
-      .onChange((value: string) => {
-        setTextMaterialProps(prev => ({ ...prev, color: value }));
-      });
-    
+    .addColor(localTextProps, 'color')
+    .name('Color')
+    .onChange((value: string) => {
+      setTextMaterialProps((prev) => ({ ...prev, color: value }));
+    });
+
     textControllersRef.current.metalnessController = textFolder
-      .add(localTextProps, 'metalness', 0, 1, 0.01)
-      .name('Metalness')
-      .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, metalness: value }));
-      });
+    .add(localTextProps, 'metalness', 0, 1, 0.01)
+    .name('Metalness')
+    .onChange((value: number) => {
+      setTextMaterialProps((prev) => ({ ...prev, metalness: value }));
+    });
 
     textControllersRef.current.roughnessController = textFolder
-      .add(localTextProps, 'roughness', 0, 1, 0.01)
-      .name('Roughness')
-      .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, roughness: value }));
-      });
+    .add(localTextProps, 'roughness', 0, 1, 0.01)
+    .name('Roughness')
+    .onChange((value: number) => {
+      setTextMaterialProps((prev) => ({ ...prev, roughness: value }));
+    });
 
-    textControllersRef.current.emissiveController = textFolder
-      .addColor(localTextProps, 'emissive')
-      .name('Emissive')
-      .onChange((value: string) => {
-        setTextMaterialProps(prev => ({ ...prev, emissive: value }));
-      });
+    textControllersRef.current.reflectivityController = textFolder
+    .add(localTextProps, 'reflectivity', 0, 1, 0.01)
+    .name('Reflectivity')
+    .onChange((value: number) => {
+      setTextMaterialProps((prev) => ({ ...prev, reflectivity: value }));
+    });
 
-    textControllersRef.current.emissiveIntensityController = textFolder
-      .add(localTextProps, 'emissiveIntensity', 0, 1, 0.01)
-      .name('Emissive Intensity')
-      .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, emissiveIntensity: value }));
-      });
-    
+    textControllersRef.current.clearcoatController = textFolder
+    .add(localTextProps, 'clearcoat', 0, 1, 0.01)
+    .name('Clearcoat')
+    .onChange((value: number) => {
+      setTextMaterialProps((prev) => ({ ...prev, clearcoat: value }));
+    });
+
+    textControllersRef.current.clearcoatRoughnessController = textFolder
+    .add(localTextProps, 'clearcoatRoughness', 0, 1, 0.01)
+    .name('Clearcoat Roughness')
+    .onChange((value: number) => {
+      setTextMaterialProps((prev) => ({ ...prev, clearcoatRoughness: value }));
+    });
+
     textControllersRef.current.opacityController = textFolder
-      .add(localTextProps, 'opacity', 0, 1, 0.01)
-      .name('Opacity')
-      .onChange((value: number) => {
-        setTextMaterialProps(prev => ({ ...prev, opacity: value }));
-      });
+    .add(localTextProps, 'opacity', 0, 1, 0.01)
+    .name('Opacity')
+    .onChange((value: number) => {
+      setTextMaterialProps((prev) => ({ ...prev, opacity: value }));
+    });
 
     // CUSHION FOLDER
-    const cushionFolder = guiOne.addFolder('Cushion');
+    const cushionFolder = guiSeven.addFolder('Cushion');
     cushionRef.current = cushionFolder;
     // cushionRef.current.open();
 
@@ -206,47 +287,31 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       });
     
     // CUSHION COVER FOLDER
-    const cushionCoverFolder = guiOne.addFolder('Cushion Cover');
-    cushionCoverRef.current = cushionCoverFolder;
+    const cushionCoverFolder = guiSeven.addFolder('Cushion Cover');
+    cushionCoverFolderRef.current = cushionCoverFolder;
 
     const localCushionCoverProps = {
-      transmission: cushionCoverMaterialProps.transmission,
-      roughness: cushionCoverMaterialProps.roughness,
-      envMapImage: cushionCoverMaterialProps.envMapImage,
-      envMapIntensity: cushionCoverMaterialProps.envMapIntensity,
+      color: cushionCoverMaterialProps.color,
+      opacity: cushionCoverMaterialProps.opacity,
     }
 
     // add controls for each property
-    cushionCoverControllersRef.current.transmissionController = cushionCoverFolder
-      .add(localCushionCoverProps, 'transmission', 0, 1, 0.01)
-      .name('Transmission')
-      .onChange((value: number) => {
-        setCushionCoverMaterialProps(prev => ({ ...prev, transmission: value }));
+    cushionCoverControllersRef.current.colorController = cushionCoverFolder
+      .addColor(localCushionCoverProps, 'color')
+      .name('Color')
+      .onChange((color: string) => {
+        setCushionCoverMaterialProps((prev) => ({ ...prev, color }));
       });
 
-    cushionCoverControllersRef.current.roughnessController = cushionCoverFolder
-      .add(localCushionCoverProps, 'roughness', 0, 1, 0.01)
-      .name('Roughness')
-      .onChange((value: number) => {
-        setCushionCoverMaterialProps(prev => ({ ...prev, roughness: value }));
-      });
-
-    cushionCoverControllersRef.current.envMapImageController = cushionCoverFolder
-      .add(localCushionCoverProps, 'envMapImage', listOfImages)
-      .name('Env Map Image')
-      .onChange((value: string) => {
-        setCushionCoverMaterialProps(prev => ({ ...prev, envMapImage: value }));
-      });
-
-    cushionCoverControllersRef.current.envMapIntensityController = cushionCoverFolder
-      .add(localCushionCoverProps, 'envMapIntensity', 0, 2, 0.01)
-      .name('Env Map Intensity')
-      .onChange((value: number) => {
-        setCushionCoverMaterialProps(prev => ({ ...prev, envMapIntensity: value }));
+    cushionCoverControllersRef.current.opacityController = cushionCoverFolder
+      .add(localCushionCoverProps, 'opacity', 0, 1, 0.01)
+      .name('Opacity')
+      .onChange((opacity: number) => {
+        setCushionCoverMaterialProps((prev) => ({ ...prev, opacity }));
       });
     
     return () => {
-      guiOne.destroy();
+      guiSeven.destroy();
     }
   }, []);
 
@@ -258,6 +323,17 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
 
       <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
+
+      <Sparkles
+        key={sparklesProps.count}
+        color={sparklesProps.color}
+        count={sparklesProps.count}
+        scale={sparklesProps.scale}
+        size={sparklesProps.size}
+        speed={sparklesProps.speed}
+        opacity={sparklesProps.opacity}
+        noise={sparklesProps.noise}
+      />
     </group>    
   );
 }

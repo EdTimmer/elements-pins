@@ -7,7 +7,6 @@ import Cushion from './Cushion';
 import Text from './Text';
 import { listOfImages } from '../../../utilities/listOfImages';
 import CushionCover from './CushionCover';
-import { Sparkles } from '@react-three/drei';
 
 interface Props {
   isMouseEntered: boolean;
@@ -58,30 +57,16 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
   const rotationFolderRef = useRef<GUI | null>(null);
   const rotationControllersRef = useRef<Record<string, any>>({});
 
-  // SPARKLES GUI REFS
-  const sparklesFolderRef = useRef<GUI | null>(null);
-  const sparklesControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
-  const [sparklesProps, setSparklesProps] = useState({
-    color: '#ffffff',
-    count: 20,
-    scale: 3,
-    size: 10,
-    speed: 0.4,
-    opacity: 1.0,
-    noise: 0.1,
-  });
-
   // TEXT GUI REFS
   const textFolderRef = useRef<GUI | null>(null);
   const textControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [textMaterialProps, setTextMaterialProps] = useState({
-    color: '#c0c0c0',
-    metalness: 1,
-    roughness: 0.15,
-    reflectivity: 1,
-    clearcoat: 1,     // Adds a clear coat layer
-    clearcoatRoughness: 0.1,
+    color: '#fff',
     opacity: 1.0,
+    roughness: 0.2,       
+    metalness: 0.2,
+    emissive: '#fff',
+    emissiveIntensity: 0.2,
   });
 
   // CUSHION GUI REFS
@@ -109,7 +94,7 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
 
   useEffect(() => {
     const guiFour = new GUI({
-      title: 'RIGHT - SECOND FROM THE TOP',
+      title: 'Ag - Silver',
       width: 350,
     });
 
@@ -134,130 +119,61 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
         setIsFacingUser(isFacingUser);
       });
 
-    // SPARKLES FOLDER
-    const sparklesFolder = guiFour.addFolder('Sparkles');
-    sparklesFolderRef.current = sparklesFolder;
-    const localSparklesProps = {
-      count: sparklesProps.count,
-      scale: sparklesProps.scale,
-      size: sparklesProps.size,
-      speed: sparklesProps.speed,
-      noise: sparklesProps.noise,
-      opacity: sparklesProps.opacity,
-      color: sparklesProps.color,
-    };
-
-    // Add controls for each property
-    sparklesControllersRef.current.colorController = sparklesFolder
-      .addColor(localSparklesProps, 'color')
-      .name('Color')
-      .onChange((value: string) => {
-        setSparklesProps((prev) => ({ ...prev, color: value }));
-      });
-
-    sparklesControllersRef.current.countController = sparklesFolder
-      .add(localSparklesProps, 'count', 0, 100, 1)
-      .name('Count')
-      .onChange((value: number) => {
-        setSparklesProps((prev) => ({ ...prev, count: value }));
-      });
-
-    sparklesControllersRef.current.scaleController = sparklesFolder
-      .add(localSparklesProps, 'scale', 0, 10, 0.1)
-      .name('Scale')
-      .onChange((value: number) => {
-        setSparklesProps((prev) => ({ ...prev, scale: value }));
-      });
-
-    sparklesControllersRef.current.sizeController = sparklesFolder
-      .add(localSparklesProps, 'size', 0, 100, 1)
-      .name('Size')
-      .onChange((value: number) => {
-        setSparklesProps((prev) => ({ ...prev, size: value }));
-      });
-
-    sparklesControllersRef.current.speedController = sparklesFolder
-      .add(localSparklesProps, 'speed', 0, 1, 0.01)
-      .name('Speed')
-      .onChange((value: number) => {
-        setSparklesProps((prev) => ({ ...prev, speed: value }));
-      });
-
-    sparklesControllersRef.current.noiseController = sparklesFolder
-      .add(localSparklesProps, 'noise', 0, 1, 0.01)
-      .name('Noise')
-      .onChange((value: number) => {
-        setSparklesProps((prev) => ({ ...prev, noise: value }));
-      });
-
-    sparklesControllersRef.current.opacityController = sparklesFolder
-      .add(localSparklesProps, 'opacity', 0, 1, 0.01)
-      .name('Opacity')
-      .onChange((value: number) => {
-        setSparklesProps((prev) => ({ ...prev, opacity: value }));
-      });
-
     // TEXT FOLDER
     const textFolder = guiFour.addFolder('Text');
     textFolderRef.current = textFolder;
+    // textFolderRef.current.open();
+
     const localTextProps = {
       color: textMaterialProps.color,
-      metalness: textMaterialProps.metalness,
-      roughness: textMaterialProps.roughness,
-      reflectivity: textMaterialProps.reflectivity,
-      clearcoat: textMaterialProps.clearcoat,
-      clearcoatRoughness: textMaterialProps.clearcoatRoughness,
       opacity: textMaterialProps.opacity,
-    };
+      roughness: textMaterialProps.roughness,
+      metalness: textMaterialProps.metalness,
+      emissive: textMaterialProps.emissive,
+      emissiveIntensity: textMaterialProps.emissiveIntensity,
+    }
 
-    // Add controls for each property
+    // add controls for each property
     textControllersRef.current.colorController = textFolder
       .addColor(localTextProps, 'color')
       .name('Color')
       .onChange((value: string) => {
-        setTextMaterialProps((prev) => ({ ...prev, color: value }));
+        setTextMaterialProps(prev => ({ ...prev, color: value }));
       });
 
     textControllersRef.current.metalnessController = textFolder
       .add(localTextProps, 'metalness', 0, 1, 0.01)
       .name('Metalness')
       .onChange((value: number) => {
-        setTextMaterialProps((prev) => ({ ...prev, metalness: value }));
+        setTextMaterialProps(prev => ({ ...prev, metalness: value }));
       });
 
     textControllersRef.current.roughnessController = textFolder
       .add(localTextProps, 'roughness', 0, 1, 0.01)
       .name('Roughness')
       .onChange((value: number) => {
-        setTextMaterialProps((prev) => ({ ...prev, roughness: value }));
+        setTextMaterialProps(prev => ({ ...prev, roughness: value }));
       });
 
-    textControllersRef.current.reflectivityController = textFolder
-      .add(localTextProps, 'reflectivity', 0, 1, 0.01)
-      .name('Reflectivity')
-      .onChange((value: number) => {
-        setTextMaterialProps((prev) => ({ ...prev, reflectivity: value }));
+    textControllersRef.current.emissiveController = textFolder
+      .addColor(localTextProps, 'emissive')
+      .name('Emissive')
+      .onChange((value: string) => {
+        setTextMaterialProps(prev => ({ ...prev, emissive: value }));
       });
 
-    textControllersRef.current.clearcoatController = textFolder
-      .add(localTextProps, 'clearcoat', 0, 1, 0.01)
-      .name('Clearcoat')
+    textControllersRef.current.emissiveIntensityController = textFolder
+      .add(localTextProps, 'emissiveIntensity', 0, 1, 0.01)
+      .name('Emissive Intensity')
       .onChange((value: number) => {
-        setTextMaterialProps((prev) => ({ ...prev, clearcoat: value }));
-      });
-
-    textControllersRef.current.clearcoatRoughnessController = textFolder
-      .add(localTextProps, 'clearcoatRoughness', 0, 1, 0.01)
-      .name('Clearcoat Roughness')
-      .onChange((value: number) => {
-        setTextMaterialProps((prev) => ({ ...prev, clearcoatRoughness: value }));
+        setTextMaterialProps(prev => ({ ...prev, emissiveIntensity: value }));
       });
 
     textControllersRef.current.opacityController = textFolder
       .add(localTextProps, 'opacity', 0, 1, 0.01)
       .name('Opacity')
       .onChange((value: number) => {
-        setTextMaterialProps((prev) => ({ ...prev, opacity: value }));
+        setTextMaterialProps(prev => ({ ...prev, opacity: value }));
       });
 
 // CUSHION FOLDER
@@ -371,16 +287,6 @@ cushionControllersRef.current.opacityController = cushionFolder
 
       <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
-      <Sparkles
-        key={sparklesProps.count}
-        color={sparklesProps.color}
-        count={sparklesProps.count}
-        scale={sparklesProps.scale}
-        size={sparklesProps.size}
-        speed={sparklesProps.speed}
-        opacity={sparklesProps.opacity}
-        noise={sparklesProps.noise}
-      />
     </group>    
   );
 }

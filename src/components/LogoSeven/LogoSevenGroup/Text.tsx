@@ -11,11 +11,12 @@ interface Props {
   depth: number;
   textMaterialProps: {
     color: string;
-    opacity: number;
-    roughness: number;
     metalness: number;
-    emissive: string;
-    emissiveIntensity: number;
+    roughness: number;
+    reflectivity: number;
+    clearcoat: number;
+    clearcoatRoughness: number;
+    opacity: number;
   }
 }
 
@@ -59,14 +60,15 @@ const Text = ({ position, rotation, text, size, depth, textMaterialProps }: Prop
 
   return (
     <mesh ref={meshRef} geometry={textGeometry} rotation={rotation} position={position} renderOrder={2}>
-      <meshStandardMaterial 
+      <meshPhysicalMaterial
+        color={textMaterialProps.color}
         metalness={textMaterialProps.metalness}
         roughness={textMaterialProps.roughness}
-        color={textMaterialProps.color}
+        reflectivity={textMaterialProps.reflectivity}  // Reflectivity of the material
+        clearcoat={textMaterialProps.clearcoat}     // Adds a clear coat layer
+        clearcoatRoughness={textMaterialProps.clearcoatRoughness}  // Polished surface
         opacity={textMaterialProps.opacity}
         transparent
-        emissive={textMaterialProps.emissive}
-        emissiveIntensity={textMaterialProps.emissiveIntensity}
       />
     </mesh>
   );

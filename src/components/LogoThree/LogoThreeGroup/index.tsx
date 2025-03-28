@@ -82,11 +82,11 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   useEffect(() => {
     const guiThree = new GUI({
       width: 350,
-      title: 'RIGHT - THIRD FROM THE TOP'
+      title: 'Pd - Palladium',
     });
     // Position the GUI
     guiThree.domElement.style.position = 'absolute';
-    guiThree.domElement.style.right = '10px';
+    guiThree.domElement.style.left = '10px';
     guiThree.domElement.style.top = guiy;
 
     // ROTATION FOLDER

@@ -79,7 +79,7 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     opacity: 1,
     emissive: '#000',
     emissiveIntensity: 0,
-    envMapIntensity: 0.2,
+    envMapIntensity: 0.1,
     envMapImages: listOfImages,
     envMapImage: '/images/silver_4.jpg',
   });
@@ -95,7 +95,7 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   useEffect(() => {
     const guiOne = new GUI({
       width: 350,
-      title: 'LEFT - THIRD FROM THE TOP'
+      title: 'Ni - Nickel'
     });
     // Position the GUI
     guiOne.domElement.style.position = 'absolute';

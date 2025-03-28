@@ -95,7 +95,7 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
   useEffect(() => {
     const guiFive = new GUI({
       width: 350,
-      title: 'LEFT - THIRD FROM THE TOP'
+      title: 'Pt - Platinum',
     });
     // Position the GUI
     guiFive.domElement.style.position = 'absolute';

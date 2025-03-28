@@ -29,7 +29,7 @@ function App() {
           </RowOne>
 
           <Row>
-            <LogoThreeWrapper guiy={'500px'} />
+            <LogoThreeWrapper guiy={'600px'} />
             <LogoFourWrapper guiy={'570px'} />
           </Row>
 
@@ -40,7 +40,7 @@ function App() {
 
           <Row>
             {/* <LogoSevenOldWrapper guiy={'1960px'} /> */}
-            <LogoSevenWrapper guiy={'1960px'} />
+            <LogoSevenWrapper guiy={'1700px'} />
             <LogoEightWrapper guiy={'2150px'} />
           </Row>
 

@@ -82,7 +82,7 @@ function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   useEffect(() => {
     const guiSix = new GUI({
       width: 350,
-      title: 'RIGHT - THIRD FROM THE TOP'
+      title: 'Au - Gold',
     });
     // Position the GUI
     guiSix.domElement.style.position = 'absolute';

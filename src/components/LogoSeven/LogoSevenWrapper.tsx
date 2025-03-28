@@ -8,7 +8,7 @@ interface Props {
   guiy: string;
 }
 
-const LogoOneWrapper = ({guiy}: Props) => {
+const LogoSevenWrapper = ({guiy}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
 
   const [isMouseEntered, setIsMouseEntered] = useState(false);
@@ -20,15 +20,15 @@ const LogoOneWrapper = ({guiy}: Props) => {
     setIsMouseEntered(false);
   }
 
-  const leftLightRef = useRef<THREE.DirectionalLight | null>(null);
-  const leftLightRefTwo = useRef<THREE.DirectionalLight | null>(null);
+  const bottomLightRef = useRef<THREE.DirectionalLight | null>(null);
+  const topLightRefTwo = useRef<THREE.DirectionalLight | null>(null);
 
   useEffect(() => {
-    if (leftLightRef.current) {
-      leftLightRef.current.lookAt(-1, -0.9, 0);
+    if (bottomLightRef.current) {
+      bottomLightRef.current.lookAt(-2, -0.9, 0);
     }
-    if (leftLightRefTwo.current) {
-      leftLightRefTwo.current.lookAt(-1, -0.9, 0);
+    if (topLightRefTwo.current) {
+      topLightRefTwo.current.lookAt(-2, 0.9, 0);
     }
   }, []);
 
@@ -42,12 +42,12 @@ const LogoOneWrapper = ({guiy}: Props) => {
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
         <ambientLight intensity={1} />
         <LogoSevenGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
-        <directionalLight position={[2, 3, 3]} intensity={1} />
-        <directionalLight position={[-2, -3, 3]} intensity={1} />
+        <directionalLight ref={topLightRefTwo} position={[0, 2, 10]} intensity={0.1} />
+        <directionalLight ref={bottomLightRef} position={[0, -2, 10]} intensity={0.1} />  
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        
   );
 }
 
-export default LogoOneWrapper;
+export default LogoSevenWrapper;
