@@ -39,11 +39,11 @@ const LogoFourWrapper = ({guiy}: Props) => {
     >
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
-        <ambientLight intensity={1} />
+        <ambientLight intensity={0.5} />
         <LogoFourGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
-        <directionalLight ref={topLightRefTwo} position={[0, 2, 10]} intensity={0.1} />
-        <directionalLight ref={bottomLightRef} position={[0, -2, 10]} intensity={0.1} />        
-        <directionalLight position={[2, -2, 5]} intensity={0.1} />
+        <directionalLight position={[0, 3, 5]} />
+        <directionalLight position={[-5, 0, 5]} />
+        <directionalLight position={[5, -5, 5]} />
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        

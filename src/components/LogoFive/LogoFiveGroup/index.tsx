@@ -33,7 +33,7 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
       // Determine the starting rotation.
       const initialRotation = isFacingUser ? 0 : Math.PI;
       // Set the target rotation: rotate an extra PI when the mouse enters.
-      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+      const targetY = isMouseEntered ? initialRotation - Math.PI : initialRotation;
       
       // Incorporate delta into the interpolation factor for frame rate independence.
       const speed = 3; // Adjust this to control the smoothness/speed
@@ -73,15 +73,15 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
   const cushionFolderRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    color: '#faf3e7',
+    color: '#fff',
     opacity: 1.0,
     roughness: 0,     
     metalness: 1.0,
-    envMapIntensity: 0.25,
+    envMapIntensity: 1.0,
     emissive: '#fff',
     emissiveIntensity: 0,
     envMapImages: listOfImages,
-    envMapImage: '/images/silver_6.jpg',
+    envMapImage: '/images/silver_5.jpg',
   });
 
   // CUSHION COVERAGE GUI REFS
@@ -289,7 +289,7 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
       <Text text={'Pt'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Platinum'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.56} depth={0.5} textMaterialProps={textMaterialProps} />
 
-      <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} />
+      {/* <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} /> */}
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
     </group>    
   );

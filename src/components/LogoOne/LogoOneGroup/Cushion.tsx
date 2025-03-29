@@ -1,6 +1,8 @@
 import { useMemo, useRef } from 'react';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
+import { useLoader } from '@react-three/fiber';
+import { TextureLoader } from 'three';
 
 interface Props {
   position: [number, number, number];
@@ -23,19 +25,40 @@ interface Props {
 const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Props) => {
   const shapeFiveRef = useRef<THREE.Mesh>(null); 
 
-  const texture = useTexture(cushionMaterialProps.envMapImage);
+  // const texture = useTexture(cushionMaterialProps.envMapImage);
 
-  const envMap = useMemo(() => {
-    texture.mapping = THREE.EquirectangularReflectionMapping;
-    texture.needsUpdate = true;
-    return texture;
-  }, [texture]);
+  // const envMap = useMemo(() => {
+  //   texture.mapping = THREE.EquirectangularReflectionMapping;
+  //   texture.needsUpdate = true;
+  //   return texture;
+  // }, [texture]);
+  const { texture, normalMap, roughnessMap } = useMemo(() => {
+    const texture = useLoader(TextureLoader, '/textures/rust/rust_coarse_01_a_diff_2k.png');
+    const normalMap = useLoader(TextureLoader, '/textures/rust/rust_coarse_01_nor_gl_2k.png');
+    const roughnessMap = useLoader(TextureLoader, '/textures/rust/rust_coarse_01_rough_2k.png');
+    
+    if (texture && normalMap && roughnessMap) {
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.magFilter = THREE.LinearFilter;
+    }
+    
+    return { texture, normalMap, roughnessMap };
+  }, []);
+
+  // Check if the assets are loaded; otherwise, return null
+  if (!texture || !normalMap || !roughnessMap) {
+    return null;
+  }
 
   return (
     <mesh ref={shapeFiveRef} position={position} rotation={rotation} scale={scale} renderOrder={1}>
-      <sphereGeometry args={[size, 32, 32]} />
+      <sphereGeometry args={[size, 64, 64]} />
       <meshStandardMaterial
-        envMap={envMap}
+        // envMap={envMap}
+        map={texture}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap} 
         metalness={cushionMaterialProps.metalness}
         roughness={cushionMaterialProps.roughness}
         opacity={cushionMaterialProps.opacity}

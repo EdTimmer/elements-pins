@@ -76,7 +76,7 @@ function LogoTwoGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
     color: '#fff',
     opacity: 1.0,
-    roughness: 0.14,     
+    roughness: 0.7,     
     metalness: 1.0,
     emissive: '#fff',
     emissiveIntensity: 0,

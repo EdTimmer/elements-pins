@@ -1,5 +1,7 @@
-import { useRef } from 'react';
+import { useLoader } from '@react-three/fiber';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { TextureLoader } from 'three';
 
 interface Props {
   position: [number, number, number];
@@ -17,12 +19,42 @@ interface Props {
 }
 
 const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Props) => {
-  const shapeOneRef = useRef<THREE.Mesh>(null); 
+  const shapeOneRef = useRef<THREE.Mesh>(null);
+
+  const { texture, normalMap, roughnessMap } = useMemo(() => {
+    // const texture = useLoader(TextureLoader, '/textures/pebbles/ganges_river_pebbles_diff_a_2k.png');
+    // const normalMap = useLoader(TextureLoader, '/textures/pebbles/ganges_river_pebbles_nor_gl_2k.png');
+    // const roughnessMap = useLoader(TextureLoader, '/textures/pebbles/ganges_river_pebbles_rough_2k.png');
+
+    // const texture = useLoader(TextureLoader, '/textures/small_pebbles/pebble_cemented_floor_diff_a_2k.png');
+    // const normalMap = useLoader(TextureLoader, '/textures/small_pebbles/pebble_cemented_floor_nor_gl_2k.png');
+    // const roughnessMap = useLoader(TextureLoader, '/textures/small_pebbles/pebble_cemented_floor_rough_2k.png');
+
+    const texture = useLoader(TextureLoader, '/textures/boulder/rock_boulder_cracked_diff_a_2k.png');
+    const normalMap = useLoader(TextureLoader, '/textures/boulder/rock_boulder_cracked_nor_gl_2k.png');
+    const roughnessMap = useLoader(TextureLoader, '/textures/boulder/rock_boulder_cracked_rough_2k.png');
+    
+    if (texture && normalMap && roughnessMap) {
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.magFilter = THREE.LinearFilter;
+    }
+    
+    return { texture, normalMap, roughnessMap };
+  }, []);
+
+  // Check if the assets are loaded; otherwise, return null
+  if (!texture || !normalMap || !roughnessMap) {
+    return null;
+  }
 
   return (
     <mesh ref={shapeOneRef} position={position} rotation={rotation} scale={scale} renderOrder={1}>
       <sphereGeometry args={[size, 32, 32]} />
-      <meshStandardMaterial 
+      <meshStandardMaterial
+        map={texture}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
         metalness={cushionMaterialProps.metalness}
         roughness={cushionMaterialProps.roughness}
         color={cushionMaterialProps.color}

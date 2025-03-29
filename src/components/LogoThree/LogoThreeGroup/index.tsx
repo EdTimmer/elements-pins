@@ -31,7 +31,7 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       // Determine the starting rotation.
       const initialRotation = isFacingUser ? 0 : Math.PI;
       // Set the target rotation: rotate an extra PI when the mouse enters.
-      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+      const targetY = isMouseEntered ? initialRotation - Math.PI : initialRotation;
       
       // Incorporate delta into the interpolation factor for frame rate independence.
       const speed = 3; // Adjust this to control the smoothness/speed
@@ -71,10 +71,10 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const cushionFolderRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    color: '#b4b4b4',
+    color: '#fff',
     opacity: 1.0,
-    roughness: 0.3,     
-    metalness: 1.0,
+    roughness: 0.6,     
+    metalness: 0.9,
     emissive: '#fff',
     emissiveIntensity: 0,
   });

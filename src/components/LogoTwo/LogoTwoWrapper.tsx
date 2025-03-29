@@ -22,7 +22,12 @@ const LogoTwoWrapper = ({guiy}: Props) => {
   const bottomLightRef = useRef<THREE.DirectionalLight | null>(null);
   const topLightRefTwo = useRef<THREE.DirectionalLight | null>(null);
 
+  const centerLightRef = useRef<THREE.DirectionalLight | null>(null);
+
   useEffect(() => {
+    if (centerLightRef.current) {
+      centerLightRef.current.lookAt(0, 0, 0);
+    }
     if (bottomLightRef.current) {
       bottomLightRef.current.lookAt(-2, -0.9, 0);
     }
@@ -44,8 +49,16 @@ const LogoTwoWrapper = ({guiy}: Props) => {
         {/* <directionalLight position={[0, 5, 5]} intensity={1} /> */}
         {/* <directionalLight position={[-5, -5, 5]} intensity={1} /> */}
         {/* <directionalLight position={[5, -5, 5]} intensity={1} /> */}
-        <directionalLight position={[5, 5, 5]} intensity={0.5} />
-        <directionalLight position={[-5, -5, 5]} intensity={0.5} />
+        {/* <directionalLight position={[5, 5, 5]} intensity={0.5} />
+        <directionalLight position={[-5, -5, 5]} intensity={0.5} /> */}
+        <directionalLight position={[0, -1, 1]} ref={centerLightRef} intensity={1} />
+        <directionalLight position={[-6, -6, 1]} ref={centerLightRef} intensity={1} />
+        
+
+        {/* <directionalLight position={[-5, 0, 1]} intensity={0.5} />
+        <directionalLight position={[0, 5, 1]} intensity={0.5} />
+        <directionalLight position={[0, -5, 1]} intensity={0.5} />
+        <directionalLight position={[-5, 0, 1]} intensity={1} /> */}
         <OrbitControls enableDamping enableZoom={false} />
       </Canvas>
     </div>        

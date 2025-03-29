@@ -39,11 +39,13 @@ const LogoOneWrapper = ({guiy}: Props) => {
     >
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={1} />
         <LogoOneGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
         {/* <directionalLight position={[2, 5, 5]} intensity={1} /> */}
-        <directionalLight position={[5, -5, 5]} intensity={1} />
+        {/* <directionalLight position={[5, -5, 5]} intensity={1} /> */}
         <OrbitControls enableDamping enableZoom={false} />
+        <directionalLight position={[0, -1, 1]} intensity={0.5} />
+        <directionalLight position={[-6, -6, 1]} intensity={0.5} />
       </Canvas>
     </div>        
   );

@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { GUI } from 'lil-gui';
 import Text from './Text';
 import Cushion from './Cushion';
+import { listOfImages } from '../../../utilities/listOfImages';
 
 interface Props {
   isMouseEntered: boolean;
@@ -71,12 +72,15 @@ function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   const cushionFolderRef = useRef<GUI | null>(null);
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
-    color: '#000',
-    opacity: 1,
-    roughness: 0.15,     
-    metalness: 0.65,
+    color: '#faf3e7',
+    opacity: 1.0,
+    roughness: 0,     
+    metalness: 1.0,
+    envMapIntensity: 0.5,
     emissive: '#fff',
     emissiveIntensity: 0,
+    envMapImages: listOfImages,
+    envMapImage: '/images/gold_1.jpg',
   });
 
   useEffect(() => {
@@ -165,58 +169,76 @@ function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     // CUSHION FOLDER
     const cushionFolder = guiSix.addFolder('Cushion');
     cushionFolderRef.current = cushionFolder;
-    // cushionFolderRef.current.open();
 
     const localCushionProps = {
       color: cushionMaterialProps.color,
       opacity: cushionMaterialProps.opacity,
       roughness: cushionMaterialProps.roughness,
       metalness: cushionMaterialProps.metalness,
+      envMapIntensity: cushionMaterialProps.envMapIntensity,
       emissive: cushionMaterialProps.emissive,
       emissiveIntensity: cushionMaterialProps.emissiveIntensity,
+      envMapImages: cushionMaterialProps.envMapImages,
+      envMapImage: cushionMaterialProps.envMapImage,
     }
 
     // add controls for each property
+    cushionControllersRef.current.envMapImageController = cushionFolder
+    .add(localCushionProps, 'envMapImage', cushionMaterialProps.envMapImages) // Passing the array creates a dropdown.
+    .name('Env Map Image')
+    .onChange((selectedImage: string) => {
+      // Update your material props with the selected image directly.
+      setCushionMaterialProps((prev) => ({ ...prev, envMapImage: selectedImage }));
+    });
+
+    cushionControllersRef.current.envMapIntensityController = cushionFolder
+      .add(localCushionProps, 'envMapIntensity', 0, 1, 0.01)
+      .name('Env Map Intensity')
+      .onChange((envMapIntensity: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, envMapIntensity }));
+      });
+
+
     cushionControllersRef.current.colorController = cushionFolder
       .addColor(localCushionProps, 'color')
       .name('Color')
-      .onChange((value: string) => {
-        setCushionMaterialProps(prev => ({ ...prev, color: value }));
+      .onChange((color: string) => {
+        setCushionMaterialProps((prev) => ({ ...prev, color }));
       });
-
+    
     cushionControllersRef.current.metalnessController = cushionFolder
       .add(localCushionProps, 'metalness', 0, 1, 0.01)
       .name('Metalness')
-      .onChange((value: number) => {
-        setCushionMaterialProps(prev => ({ ...prev, metalness: value }));
+      .onChange((metalness: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, metalness }));
       });
 
     cushionControllersRef.current.roughnessController = cushionFolder
       .add(localCushionProps, 'roughness', 0, 1, 0.01)
       .name('Roughness')
-      .onChange((value: number) => {
-        setCushionMaterialProps(prev => ({ ...prev, roughness: value }));
+      .onChange((roughness: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, roughness }));
       });
-      
+
     cushionControllersRef.current.emissiveController = cushionFolder
       .addColor(localCushionProps, 'emissive')
       .name('Emissive')
-      .onChange((value: string) => {
-        setCushionMaterialProps(prev => ({ ...prev, emissive: value }));
+      .onChange((emissive: string) => {
+        setCushionMaterialProps((prev) => ({ ...prev, emissive }));
       });
 
     cushionControllersRef.current.emissiveIntensityController = cushionFolder
       .add(localCushionProps, 'emissiveIntensity', 0, 1, 0.01)
       .name('Emissive Intensity')
-      .onChange((value: number) => {
-        setCushionMaterialProps(prev => ({ ...prev, emissiveIntensity: value }));
+      .onChange((emissiveIntensity: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, emissiveIntensity }));
       });
-
+    
     cushionControllersRef.current.opacityController = cushionFolder
       .add(localCushionProps, 'opacity', 0, 1, 0.01)
       .name('Opacity')
-      .onChange((value: number) => {
-        setCushionMaterialProps(prev => ({ ...prev, opacity: value }));
+      .onChange((opacity: number) => {
+        setCushionMaterialProps((prev) => ({ ...prev, opacity }));
       });
     
     return () => {

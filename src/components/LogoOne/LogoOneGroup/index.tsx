@@ -33,7 +33,7 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
       // Determine the starting rotation.
       const initialRotation = isFacingUser ? 0 : Math.PI;
       // Set the target rotation: rotate an extra PI when the mouse enters.
-      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+      const targetY = isMouseEntered ? initialRotation - Math.PI : initialRotation;
       
       // Incorporate delta into the interpolation factor for frame rate independence.
       const speed = 3; // Adjust this to control the smoothness/speed
@@ -74,8 +74,8 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
     color: '#fff',
-    metalness: 1.0,
-    roughness: 0,
+    metalness: 0,
+    roughness: 0.7,
     opacity: 1,
     emissive: '#000',
     emissiveIntensity: 0,
