@@ -23,10 +23,6 @@ const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Prop
   const shapeRef = useRef<THREE.Mesh>(null);
 
   const { texture, normalMap, roughnessMap } = useMemo(() => {
-    // const texture = useLoader(TextureLoader, '/textures/pebbles/ganges_river_pebbles_diff_a_2k.png');
-    // const normalMap = useLoader(TextureLoader, '/textures/pebbles/ganges_river_pebbles_nor_gl_2k.png');
-    // const roughnessMap = useLoader(TextureLoader, '/textures/pebbles/ganges_river_pebbles_rough_2k.png');
-
     // const texture = useLoader(TextureLoader, '/textures/small_pebbles/pebble_cemented_floor_diff_a_2k.png');
     // const normalMap = useLoader(TextureLoader, '/textures/small_pebbles/pebble_cemented_floor_nor_gl_2k.png');
     // const roughnessMap = useLoader(TextureLoader, '/textures/small_pebbles/pebble_cemented_floor_rough_2k.png');
@@ -34,6 +30,14 @@ const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Prop
     const texture = useLoader(TextureLoader, '/textures/rock/rock_pitted_mossy_diff_a_2k.png');
     const normalMap = useLoader(TextureLoader, '/textures/rock/rock_pitted_mossy_nor_gl_2k.png');
     const roughnessMap = useLoader(TextureLoader, '/textures/rock/rock_pitted_mossy_rough_2k.png');
+
+    // const texture = useLoader(TextureLoader, '/textures/boulder/rock_boulder_cracked_diff_a_2k.png');
+    // const normalMap = useLoader(TextureLoader, '/textures/boulder/rock_boulder_cracked_nor_gl_2k.png');
+    // const roughnessMap = useLoader(TextureLoader, '/textures/boulder/rock_boulder_cracked_rough_2k.png');
+
+    // const texture = useLoader(TextureLoader, '/textures/paving/hexagonal_concrete_paving_diff_a_2k.png');
+    // const normalMap = useLoader(TextureLoader, '/textures/paving/hexagonal_concrete_paving_nor_gl_2k.png');
+    // const roughnessMap = useLoader(TextureLoader, '/textures/paving/hexagonal_concrete_paving_rough_2k.png');
     
     if (texture && normalMap && roughnessMap) {
       texture.wrapS = THREE.RepeatWrapping;

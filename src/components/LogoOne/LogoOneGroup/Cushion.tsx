@@ -25,13 +25,6 @@ interface Props {
 const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Props) => {
   const shapeFiveRef = useRef<THREE.Mesh>(null); 
 
-  // const texture = useTexture(cushionMaterialProps.envMapImage);
-
-  // const envMap = useMemo(() => {
-  //   texture.mapping = THREE.EquirectangularReflectionMapping;
-  //   texture.needsUpdate = true;
-  //   return texture;
-  // }, [texture]);
   const { texture, normalMap, roughnessMap } = useMemo(() => {
     const texture = useLoader(TextureLoader, '/textures/rust/rust_coarse_01_a_diff_2k.png');
     const normalMap = useLoader(TextureLoader, '/textures/rust/rust_coarse_01_nor_gl_2k.png');
@@ -55,7 +48,6 @@ const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Prop
     <mesh ref={shapeFiveRef} position={position} rotation={rotation} scale={scale} renderOrder={1}>
       <sphereGeometry args={[size, 64, 64]} />
       <meshStandardMaterial
-        // envMap={envMap}
         map={texture}
         normalMap={normalMap}
         roughnessMap={roughnessMap} 

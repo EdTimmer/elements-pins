@@ -7,7 +7,7 @@ export const AppWrapper = styled.div`
   font-family: 'Roboto Mono', monospace;
   padding: 0 370px;
   width: 100%;
-  height: 2800px;
+  height: 2120px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -153,14 +153,25 @@ export const ContactRow = styled.div`
   margin-bottom: 3rem;
 `;
 
-export const WebLink = styled.a`
-  color: ${colors.seasalt};
-  font-family: 'Carlito', 'Roboto Mono', monospace;
-  font-size: 2.6rem;
-  text-decoration-line: underline;
-  text-underline-offset: 5px;
-  margin-left: 0.4rem;
-  /* z-index: 3; */
+export const WebLinkContainer = styled.div`
+  color: ${colors.seasalt};  
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  font-size: 16px;
+  letter-spacing: 2px;
+
+  a {
+    font-family: 'Carlito', 'Roboto Mono', monospace;
+    color: #6c757dff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
 `;
 
 export const Email = styled.p`
@@ -179,3 +190,11 @@ export const CenterSection = styled.div`
   align-items: flex-start;
 `;
 
+export const Box = styled.div`
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background-color: ${colors.eerieBlack};
+  width: 350px;
+  height: 40px;
+`;
