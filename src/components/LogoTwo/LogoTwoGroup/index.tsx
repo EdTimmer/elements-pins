@@ -250,9 +250,9 @@ function LogoTwoGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   return (
     <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoTwoGroupRef}>
       <Text text={'29'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Cu'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'Copper'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.65} depth={0.5} textMaterialProps={textMaterialProps} />
-      <Text text={'63.546'} position={[0, -0.8, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Cu'} position={[0.05, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'Copper'} position={[0, 0.1, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.65} depth={0.5} textMaterialProps={textMaterialProps} />
+      <Text text={'63.546'} position={[0, -0.7, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
     </group>    
   );

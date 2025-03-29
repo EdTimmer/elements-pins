@@ -161,6 +161,7 @@ export const WebLinkContainer = styled.div`
   transform: translate(-50%, 0%);
   font-size: 16px;
   letter-spacing: 2px;
+  z-index: 3;
 
   a {
     font-family: 'Carlito', 'Roboto Mono', monospace;
