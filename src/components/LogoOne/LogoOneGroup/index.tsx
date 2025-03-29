@@ -4,7 +4,6 @@ import { Group, MathUtils } from 'three';
 import * as THREE from 'three';
 import { GUI } from 'lil-gui';
 import Cushion from './Cushion';
-import CushionCover from './CushionCover';
 import { listOfImages } from '../../../utilities/listOfImages';
 import Text from './Text';
 
@@ -82,14 +81,6 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     envMapIntensity: 0.1,
     envMapImages: listOfImages,
     envMapImage: '/images/silver_4.jpg',
-  });
-
-  // CUSHION COVERAGE GUI REFS
-  const cushionCoverFolderRef = useRef<GUI | null>(null);
-  const cushionCoverControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
-  const [cushionCoverMaterialProps, setCushionCoverMaterialProps] = useState({
-    color: '#e4e3e3',
-    opacity: 0,
   });
 
   useEffect(() => {
@@ -250,32 +241,7 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
       .name('Opacity')
       .onChange((opacity: number) => {
         setCushionMaterialProps((prev) => ({ ...prev, opacity }));
-      });
-
-    // CUSHION COVER FOLDER
-    const cushionCoverFolder = guiOne.addFolder('Cushion Cover');
-    cushionCoverFolderRef.current = cushionCoverFolder;
-
-    const localCushionCoverProps = {
-      color: cushionCoverMaterialProps.color,
-      opacity: cushionCoverMaterialProps.opacity,
-    }
-
-    // add controls for each property
-    cushionCoverControllersRef.current.colorController = cushionCoverFolder
-      .addColor(localCushionCoverProps, 'color')
-      .name('Color')
-      .onChange((color: string) => {
-        setCushionCoverMaterialProps((prev) => ({ ...prev, color }));
-      });
-
-    cushionCoverControllersRef.current.opacityController = cushionCoverFolder
-      .add(localCushionCoverProps, 'opacity', 0, 1, 0.01)
-      .name('Opacity')
-      .onChange((opacity: number) => {
-        setCushionCoverMaterialProps((prev) => ({ ...prev, opacity }));
-      });
-    
+      });    
 
     return () => {
       guiOne.destroy();
@@ -288,8 +254,6 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
       <Text text={'28'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Ni'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Nickel'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.7} depth={0.5} textMaterialProps={textMaterialProps} />
-
-      <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} />
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
     </group>    
   );

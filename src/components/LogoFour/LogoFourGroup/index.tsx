@@ -5,8 +5,6 @@ import * as THREE from 'three';
 import { GUI } from 'lil-gui';
 import Cushion from './Cushion';
 import Text from './Text';
-import { listOfImages } from '../../../utilities/listOfImages';
-import CushionCover from './CushionCover';
 
 interface Props {
   isMouseEntered: boolean;
@@ -79,14 +77,6 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
     metalness: 0.9,
     emissive: '#fff',
     emissiveIntensity: 0,
-  });
-
-  // CUSHION COVER GUI REFS
-  const cushionCoverFolderRef = useRef<GUI | null>(null);
-  const cushionCoverControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
-  const [cushionCoverMaterialProps, setCushionCoverMaterialProps] = useState({
-    color: '#e4e3e3',
-    opacity: 0.3,
   });
 
   useEffect(() => {
@@ -228,30 +218,6 @@ cushionControllersRef.current.opacityController = cushionFolder
   .onChange((value: number) => {
     setCushionMaterialProps(prev => ({ ...prev, opacity: value }));
   });
-
-  // CUSHION COVER FOLDER
-  const cushionCoverFolder = guiFour.addFolder('Cushion Cover');
-  cushionCoverFolderRef.current = cushionCoverFolder;
-
-  const localCushionCoverProps = {
-    color: cushionCoverMaterialProps.color,
-    opacity: cushionCoverMaterialProps.opacity,
-  }
-
-  // add controls for each property
-  cushionCoverControllersRef.current.colorController = cushionCoverFolder
-    .addColor(localCushionCoverProps, 'color')
-    .name('Color')
-    .onChange((color: string) => {
-      setCushionCoverMaterialProps((prev) => ({ ...prev, color }));
-    });
-
-  cushionCoverControllersRef.current.opacityController = cushionCoverFolder
-    .add(localCushionCoverProps, 'opacity', 0, 1, 0.01)
-    .name('Opacity')
-    .onChange((opacity: number) => {
-      setCushionCoverMaterialProps((prev) => ({ ...prev, opacity }));
-    });
     
     return () => {
       guiFour.destroy();
@@ -263,9 +229,6 @@ cushionControllersRef.current.opacityController = cushionFolder
       <Text text={'47'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Ag'} position={[0, -0.1, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Silver'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.7} depth={0.5} textMaterialProps={textMaterialProps} />
-
-
-      {/* <CushionCover size={1.12} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionCoverMaterialProps={cushionCoverMaterialProps} /> */}
       <Cushion size={1.1} scale={[1.7, 1.7, 0.4]} position={[0, 0, 0]} rotation={new THREE.Euler(0, 0, 0)} cushionMaterialProps={cushionMaterialProps} />
     </group>    
   );
