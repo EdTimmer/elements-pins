@@ -110,6 +110,16 @@ function LogoSevenGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
     guiSeven.domElement.style.left = '10px';
     guiSeven.domElement.style.top = guiy;
 
+    // GUI media query
+    const updateGUIVisibility = () => {
+      const shouldShowGUI = window.innerWidth >= 1250; // Adjust breakpoint as needed
+      guiSeven.domElement.style.display = shouldShowGUI ? 'block' : 'none';
+    };
+    updateGUIVisibility();
+      
+    // Update visibility when window is resized
+    window.addEventListener('resize', updateGUIVisibility);
+
     // ROTATION FOLDER
     const rotationFolder = guiSeven.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;

@@ -90,6 +90,16 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
     guiFour.domElement.style.right = '10px';
     guiFour.domElement.style.top = guiy;
 
+    // GUI media query
+    const updateGUIVisibility = () => {
+      const shouldShowGUI = window.innerWidth >= 1250; // Adjust breakpoint as needed
+      guiFour.domElement.style.display = shouldShowGUI ? 'block' : 'none';
+    };
+    updateGUIVisibility();
+
+    // Update visibility when window is resized
+    window.addEventListener('resize', updateGUIVisibility);
+
     // ROTATION FOLDER
     const rotationFolder = guiFour.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;

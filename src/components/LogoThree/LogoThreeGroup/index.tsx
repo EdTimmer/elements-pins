@@ -89,6 +89,16 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
     guiThree.domElement.style.left = '10px';
     guiThree.domElement.style.top = guiy;
 
+    // GUI media query
+    const updateGUIVisibility = () => {
+      const shouldShowGUI = window.innerWidth >= 1250; // Adjust breakpoint as needed
+      guiThree.domElement.style.display = shouldShowGUI ? 'block' : 'none';
+    };
+    updateGUIVisibility();
+      
+    // Update visibility when window is resized
+    window.addEventListener('resize', updateGUIVisibility);
+
     // ROTATION FOLDER
     const rotationFolder = guiThree.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;

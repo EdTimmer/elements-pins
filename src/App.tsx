@@ -7,6 +7,7 @@ import {
   RowOne,
   WebLinkContainer,
   Box,
+  RightSidePin,
 } from './App.styles'
 
 const LogoSixWrapper = lazy(() => import('./components/LogoSix/LogoSixWrapper'));
@@ -31,23 +32,35 @@ function App() {
         <Suspense fallback={<LoadingSpinner />}>
           <CenterSectionWrapper>
             <RowOne>              
-              <LogoOneWrapper guiy={'10px'} />           
-              <LogoTwoWrapper guiy={'10px'} />
+              <LogoOneWrapper guiy={'10px'} />
+
+              <RightSidePin>        
+                <LogoTwoWrapper guiy={'10px'} />
+              </RightSidePin>
             </RowOne>
 
             <Row>             
-              <LogoThreeWrapper guiy={'445px'} />        
-              <LogoFourWrapper guiy={'445px'} />              
+              <LogoThreeWrapper guiy={'445px'} />
+
+              <RightSidePin>   
+                <LogoFourWrapper guiy={'445px'} />
+              </RightSidePin>  
             </Row>
 
             <Row>
               <LogoFiveWrapper guiy={'880px'} />
-              <LogoSixWrapper guiy={'880px'} />              
+
+              <RightSidePin>
+                <LogoSixWrapper guiy={'880px'} />
+              </RightSidePin>         
             </Row>
 
             <Row>              
               <LogoSevenWrapper guiy={'1365px'} />
-              <LogoEightWrapper guiy={'1365px'} />              
+
+              <RightSidePin>
+                <LogoEightWrapper guiy={'1365px'} />
+              </RightSidePin>     
             </Row>
           </CenterSectionWrapper>
         </Suspense>

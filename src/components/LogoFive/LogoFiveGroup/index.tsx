@@ -93,6 +93,16 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
     guiFive.domElement.style.left = '10px';
     guiFive.domElement.style.top = guiy;
 
+    // GUI media query
+    const updateGUIVisibility = () => {
+      const shouldShowGUI = window.innerWidth >= 1250; // Adjust breakpoint as needed
+      guiFive.domElement.style.display = shouldShowGUI ? 'block' : 'none';
+    };
+    updateGUIVisibility();
+      
+    // Update visibility when window is resized
+    window.addEventListener('resize', updateGUIVisibility);
+
     // ROTATION FOLDER
     const rotationFolder = guiFive.addFolder('Rotation');
     rotationFolderRef.current = rotationFolder;

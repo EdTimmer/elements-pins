@@ -14,6 +14,11 @@ export const AppWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   background-color: ${colors.seasalt};
+
+  @media (max-width: 1250px) {
+    padding: 0;
+    min-height: 100vh;
+  }
 `;
 
 export const AppMiddleColumn = styled.div`
@@ -31,15 +36,20 @@ export const AppMiddleColumn = styled.div`
 `;
 
 export const CenterSectionWrapper = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  padding-top: 200px;
+
+  @media (min-width: 1250px) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* height: 100vh; */
+  }
 `;
 
 export const RowOne = styled.div`
@@ -61,6 +71,12 @@ export const Row = styled.div`
   margin-bottom: -100px;
   padding: 0;
   flex-wrap: wrap;
+`;
+
+export const RightSidePin = styled.div`
+  @media (max-width: 600px) {
+    margin-top: -100px;
+  }
 `;
 
 export const WebLinkContainer = styled.div`
