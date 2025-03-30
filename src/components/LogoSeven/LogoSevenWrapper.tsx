@@ -18,6 +18,7 @@ const LogoSevenWrapper = ({guiy, isSmallScreen}: Props) => {
     setIsMouseEntered(true);
   }
   const handleMouseLeave = () => {
+    if (isSmallScreen) return;
     setIsMouseEntered(false);
   }
   const handleRotate = () => {
