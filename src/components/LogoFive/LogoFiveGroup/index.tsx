@@ -76,7 +76,7 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
     opacity: 1.0,
     roughness: 0,     
     metalness: 1.0,
-    envMapIntensity: 0.55,
+    envMapIntensity: 0.4,
     emissive: '#fff',
     emissiveIntensity: 0,
     envMapImages: listOfImages,
@@ -108,7 +108,6 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
       .onChange((isFacingUser: boolean) => {
         setIsFacingUser(isFacingUser);
       });
-
 
       // TEXT FOLDER
     const textFolder = guiFive.addFolder('Text');
@@ -246,7 +245,6 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
     return () => {
       guiFive.destroy();
     }
-
   }, []);
 
   return (

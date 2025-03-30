@@ -4,7 +4,6 @@ import { Group, MathUtils } from 'three';
 import * as THREE from 'three';
 import { GUI } from 'lil-gui';
 import Cushion from './Cushion';
-import { listOfImages } from '../../../utilities/listOfImages';
 import Text from './Text';
 
 interface Props {
@@ -25,33 +24,33 @@ function LogoTwoGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     }
   }, [isFacingUser]);
 
-    useFrame((state, delta) => {
-      if (logoTwoGroupRef.current) {
-        // Apply a "breathing" effect on the X axis.
-        logoTwoGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
-  
-        // Determine the starting rotation.
-        const initialRotation = isFacingUser ? 0 : Math.PI;
-        // Set the target rotation: rotate an extra PI when the mouse enters.
-        const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
-        
-        // Incorporate delta into the interpolation factor for frame rate independence.
-        const speed = 3; // Adjust this to control the smoothness/speed
-        const lerpFactor = 1 - Math.exp(-speed * delta);
-        
-        // Interpolate the current rotation towards the target rotation.
-        logoTwoGroupRef.current.rotation.y = MathUtils.lerp(
-          logoTwoGroupRef.current.rotation.y,
-          targetY,
-          lerpFactor
-        );
-  
-        // Optionally, snap to target if very close.
-        if (Math.abs(logoTwoGroupRef.current.rotation.y - targetY) < 0.001) {
-          logoTwoGroupRef.current.rotation.y = targetY;
-        }
+  useFrame((state, delta) => {
+    if (logoTwoGroupRef.current) {
+      // Apply a "breathing" effect on the X axis.
+      logoTwoGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
+
+      // Determine the starting rotation.
+      const initialRotation = isFacingUser ? 0 : Math.PI;
+      // Set the target rotation: rotate an extra PI when the mouse enters.
+      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+      
+      // Incorporate delta into the interpolation factor for frame rate independence.
+      const speed = 3; // Adjust this to control the smoothness/speed
+      const lerpFactor = 1 - Math.exp(-speed * delta);
+      
+      // Interpolate the current rotation towards the target rotation.
+      logoTwoGroupRef.current.rotation.y = MathUtils.lerp(
+        logoTwoGroupRef.current.rotation.y,
+        targetY,
+        lerpFactor
+      );
+
+      // Optionally, snap to target if very close.
+      if (Math.abs(logoTwoGroupRef.current.rotation.y - targetY) < 0.001) {
+        logoTwoGroupRef.current.rotation.y = targetY;
       }
-    });
+    }
+  });
 
   // ROTATION GUI REFS
   const rotationFolderRef = useRef<GUI | null>(null);
@@ -79,9 +78,6 @@ function LogoTwoGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     metalness: 1.0,
     emissive: '#fff',
     emissiveIntensity: 0,
-    envMapIntensity: 0.05,
-    envMapImages: listOfImages,
-    envMapImage: '/images/copper_1.jpg',
   });
 
   useEffect(() => {
@@ -176,29 +172,11 @@ function LogoTwoGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
       opacity: cushionMaterialProps.opacity,
       roughness: cushionMaterialProps.roughness,
       metalness: cushionMaterialProps.metalness,
-      envMapIntensity: cushionMaterialProps.envMapIntensity,
       emissive: cushionMaterialProps.emissive,
-      emissiveIntensity: cushionMaterialProps.emissiveIntensity,
-      envMapImages: cushionMaterialProps.envMapImages,
-      envMapImage: cushionMaterialProps.envMapImage,     
+      emissiveIntensity: cushionMaterialProps.emissiveIntensity,  
     }
 
     // add controls for each property
-    cushionControllersRef.current.envMapImageController = cushionFolder
-      .add(localCushionProps, 'envMapImage', cushionMaterialProps.envMapImages) // Passing the array creates a dropdown.
-      .name('Env Map Image')
-      .onChange((selectedImage: string) => {
-        // Update your material props with the selected image directly.
-        setCushionMaterialProps((prev) => ({ ...prev, envMapImage: selectedImage }));
-      });
-
-    cushionControllersRef.current.envMapIntensityController = cushionFolder
-      .add(localCushionProps, 'envMapIntensity', 0, 1, 0.01)
-      .name('Env Map Intensity')
-      .onChange((envMapIntensity: number) => {
-        setCushionMaterialProps((prev) => ({ ...prev, envMapIntensity }));
-      });
-
     cushionControllersRef.current.colorController = cushionFolder
       .addColor(localCushionProps, 'color')
       .name('Color')

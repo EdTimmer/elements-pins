@@ -76,7 +76,7 @@ function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     opacity: 1.0,
     roughness: 0,     
     metalness: 1.0,
-    envMapIntensity: 1.0,
+    envMapIntensity: 0.6,
     emissive: '#fff',
     emissiveIntensity: 0,
     envMapImages: listOfImages,
@@ -244,7 +244,6 @@ function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
     return () => {
       guiSix.destroy();
     };
-
   }, []);
 
   return (

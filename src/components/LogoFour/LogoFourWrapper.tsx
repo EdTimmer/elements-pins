@@ -1,7 +1,6 @@
 import { Canvas } from '@react-three/fiber';
-import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import LogoFourGroup from './LogoFourGroup';
 
 interface Props {
@@ -18,18 +17,6 @@ const LogoFourWrapper = ({guiy}: Props) => {
   const handleMouseLeave = () => {
     setIsMouseEntered(false);
   }
-
-  const bottomLightRef = useRef<THREE.DirectionalLight | null>(null);
-  const topLightRefTwo = useRef<THREE.DirectionalLight | null>(null);
-
-  useEffect(() => {
-    if (bottomLightRef.current) {
-      bottomLightRef.current.lookAt(-2, -0.9, 0);
-    }
-    if (topLightRefTwo.current) {
-      topLightRefTwo.current.lookAt(-2, 0.9, 0);
-    }
-  }, []);
 
   return (
     <div 

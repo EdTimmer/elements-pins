@@ -47,7 +47,6 @@ declare global {
   }
 }
 
-
 interface Props {
   position: [number, number, number];
   rotation: THREE.Euler;

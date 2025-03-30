@@ -1,5 +1,4 @@
-import { useTexture } from '@react-three/drei';
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import * as THREE from 'three';
 
 interface Props {

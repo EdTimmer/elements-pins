@@ -26,32 +26,32 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   }, [isFacingUser]);
 
   useFrame((state, delta) => {
-      if (logoEightGroupRef.current) {
-        // Apply a "breathing" effect on the X axis.
-        logoEightGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
-  
-        // Determine the starting rotation.
-        const initialRotation = isFacingUser ? 0 : Math.PI;
-        // Set the target rotation: rotate an extra PI when the mouse enters.
-        const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
-        
-        // Incorporate delta into the interpolation factor for frame rate independence.
-        const speed = 3; // Adjust this to control the smoothness/speed
-        const lerpFactor = 1 - Math.exp(-speed * delta);
-        
-        // Interpolate the current rotation towards the target rotation.
-        logoEightGroupRef.current.rotation.y = MathUtils.lerp(
-          logoEightGroupRef.current.rotation.y,
-          targetY,
-          lerpFactor
-        );
-  
-        // Optionally, snap to target if very close.
-        if (Math.abs(logoEightGroupRef.current.rotation.y - targetY) < 0.001) {
-          logoEightGroupRef.current.rotation.y = targetY;
-        }
+    if (logoEightGroupRef.current) {
+      // Apply a "breathing" effect on the X axis.
+      logoEightGroupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.12;
+
+      // Determine the starting rotation.
+      const initialRotation = isFacingUser ? 0 : Math.PI;
+      // Set the target rotation: rotate an extra PI when the mouse enters.
+      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+      
+      // Incorporate delta into the interpolation factor for frame rate independence.
+      const speed = 3; // Adjust this to control the smoothness/speed
+      const lerpFactor = 1 - Math.exp(-speed * delta);
+      
+      // Interpolate the current rotation towards the target rotation.
+      logoEightGroupRef.current.rotation.y = MathUtils.lerp(
+        logoEightGroupRef.current.rotation.y,
+        targetY,
+        lerpFactor
+      );
+
+      // Optionally, snap to target if very close.
+      if (Math.abs(logoEightGroupRef.current.rotation.y - targetY) < 0.001) {
+        logoEightGroupRef.current.rotation.y = targetY;
       }
-    });
+    }
+  });
 
   // ROTATION GUI REFS
   const rotationFolderRef = useRef<GUI | null>(null);
@@ -332,11 +332,6 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
 
   return (
     <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoEightGroupRef}>
-      {/* <DeloitteDigitalLogoGroup
-        textMaterialProps={textMaterialProps}
-        textLightMaterialProps={textLightMaterialProps}
-        sphereMaterialProps={sphereMaterialProps}
-      /> */}
       <Text text={'111'} position={[-0.7, 0.9, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Rg'} position={[0.1, -0.25, 0.3]} rotation={new THREE.Euler(0, 0, 0)} size={1.2} depth={0.5} textMaterialProps={textMaterialProps} />
       <Text text={'Roentgenium'} position={[0, 0, -0.3]} rotation={new THREE.Euler(0, Math.PI, 0)} size={0.4} depth={0.5} textMaterialProps={textMaterialProps} />

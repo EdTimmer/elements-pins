@@ -29,9 +29,6 @@ const LogoThreeWrapper = ({guiy}: Props) => {
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
         <ambientLight intensity={0.5} />
         <LogoThreeGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
-        {/* <directionalLight position={[0, 5, 5]} />
-        <directionalLight position={[-5, -5, 5]} />
-        <directionalLight position={[5, -5, 5]} /> */}
         <directionalLight position={[0, 3, 5]} />
         <directionalLight position={[-5, 0, 5]} />
         <directionalLight position={[5, -5, 5]} />

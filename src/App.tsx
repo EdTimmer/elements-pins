@@ -33,19 +33,19 @@ function App() {
           </RowOne>
 
           <Row>
-            <LogoThreeWrapper guiy={'490px'} />
-            <LogoFourWrapper guiy={'490px'} />
+            <LogoThreeWrapper guiy={'445px'} />
+            <LogoFourWrapper guiy={'445px'} />
           </Row>
 
           <Row>
-            <LogoFiveWrapper guiy={'925px'} />
-            <LogoSixWrapper guiy={'925px'} />
+            <LogoFiveWrapper guiy={'880px'} />
+            <LogoSixWrapper guiy={'880px'} />
           </Row>
 
           <Row>
             {/* <LogoSevenOldWrapper guiy={'1960px'} /> */}
-            <LogoSevenWrapper guiy={'1410px'} />
-            <LogoEightWrapper guiy={'1410px'} />
+            <LogoSevenWrapper guiy={'1365px'} />
+            <LogoEightWrapper guiy={'1365px'} />
           </Row>
 
           {/* <Row>

@@ -73,7 +73,7 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
     color: '#fff',
     opacity: 1.0,
-    roughness: 0.6,     
+    roughness: 0.9,     
     metalness: 0.9,
     emissive: '#fff',
     emissiveIntensity: 0,
@@ -163,66 +163,66 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
         setTextMaterialProps(prev => ({ ...prev, opacity: value }));
       });
 
-// CUSHION FOLDER
-const cushionFolder = guiFour.addFolder('Cushion');
-cushionFolderRef.current = cushionFolder;
+  // CUSHION FOLDER
+  const cushionFolder = guiFour.addFolder('Cushion');
+  cushionFolderRef.current = cushionFolder;
 
-const localCushionProps = {
-  color: cushionMaterialProps.color,
-  opacity: cushionMaterialProps.opacity,
-  roughness: cushionMaterialProps.roughness,
-  metalness: cushionMaterialProps.metalness,
-  emissive: cushionMaterialProps.emissive,
-  emissiveIntensity: cushionMaterialProps.emissiveIntensity,
-}
+  const localCushionProps = {
+    color: cushionMaterialProps.color,
+    opacity: cushionMaterialProps.opacity,
+    roughness: cushionMaterialProps.roughness,
+    metalness: cushionMaterialProps.metalness,
+    emissive: cushionMaterialProps.emissive,
+    emissiveIntensity: cushionMaterialProps.emissiveIntensity,
+  }
 
-// add controls for each property
-cushionControllersRef.current.colorController = cushionFolder
-  .addColor(localCushionProps, 'color')
-  .name('Color')
-  .onChange((value: string) => {
-    setCushionMaterialProps(prev => ({ ...prev, color: value }));
-  });
+  // add controls for each property
+  cushionControllersRef.current.colorController = cushionFolder
+    .addColor(localCushionProps, 'color')
+    .name('Color')
+    .onChange((value: string) => {
+      setCushionMaterialProps(prev => ({ ...prev, color: value }));
+    });
 
-cushionControllersRef.current.metalnessController = cushionFolder
-  .add(localCushionProps, 'metalness', 0, 1, 0.01)
-  .name('Metalness')
-  .onChange((value: number) => {
-    setCushionMaterialProps(prev => ({ ...prev, metalness: value }));
-  });
+  cushionControllersRef.current.metalnessController = cushionFolder
+    .add(localCushionProps, 'metalness', 0, 1, 0.01)
+    .name('Metalness')
+    .onChange((value: number) => {
+      setCushionMaterialProps(prev => ({ ...prev, metalness: value }));
+    });
 
-cushionControllersRef.current.roughnessController = cushionFolder
-  .add(localCushionProps, 'roughness', 0, 1, 0.01)
-  .name('Roughness')
-  .onChange((value: number) => {
-    setCushionMaterialProps(prev => ({ ...prev, roughness: value }));
-  });
-  
-cushionControllersRef.current.emissiveController = cushionFolder
-  .addColor(localCushionProps, 'emissive')
-  .name('Emissive')
-  .onChange((value: string) => {
-    setCushionMaterialProps(prev => ({ ...prev, emissive: value }));
-  });
-
-cushionControllersRef.current.emissiveIntensityController = cushionFolder
-  .add(localCushionProps, 'emissiveIntensity', 0, 1, 0.01)
-  .name('Emissive Intensity')
-  .onChange((value: number) => {
-    setCushionMaterialProps(prev => ({ ...prev, emissiveIntensity: value }));
-  });
-
-cushionControllersRef.current.opacityController = cushionFolder
-  .add(localCushionProps, 'opacity', 0, 1, 0.01)
-  .name('Opacity')
-  .onChange((value: number) => {
-    setCushionMaterialProps(prev => ({ ...prev, opacity: value }));
-  });
+  cushionControllersRef.current.roughnessController = cushionFolder
+    .add(localCushionProps, 'roughness', 0, 1, 0.01)
+    .name('Roughness')
+    .onChange((value: number) => {
+      setCushionMaterialProps(prev => ({ ...prev, roughness: value }));
+    });
     
-    return () => {
-      guiFour.destroy();
-    }    
-  }, []);
+  cushionControllersRef.current.emissiveController = cushionFolder
+    .addColor(localCushionProps, 'emissive')
+    .name('Emissive')
+    .onChange((value: string) => {
+      setCushionMaterialProps(prev => ({ ...prev, emissive: value }));
+    });
+
+  cushionControllersRef.current.emissiveIntensityController = cushionFolder
+    .add(localCushionProps, 'emissiveIntensity', 0, 1, 0.01)
+    .name('Emissive Intensity')
+    .onChange((value: number) => {
+      setCushionMaterialProps(prev => ({ ...prev, emissiveIntensity: value }));
+    });
+
+  cushionControllersRef.current.opacityController = cushionFolder
+    .add(localCushionProps, 'opacity', 0, 1, 0.01)
+    .name('Opacity')
+    .onChange((value: number) => {
+      setCushionMaterialProps(prev => ({ ...prev, opacity: value }));
+    });
+      
+      return () => {
+        guiFour.destroy();
+      }    
+    }, []);
 
   return (
     <group position={[0, 0, 0]} scale={[1.0, 1.0, 1.0]} ref={logoFourGroupRef}>

@@ -1,5 +1,4 @@
 import { useMemo, useRef } from 'react';
-import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
@@ -14,11 +13,8 @@ interface Props {
     metalness: number;
     roughness: number;
     opacity: number;
-    envMapIntensity: number;
     emissive: string;
     emissiveIntensity: number;
-    envMapImages: string[];
-    envMapImage: string;
   },
 }
 
@@ -48,14 +44,12 @@ const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Prop
     <mesh ref={shapeOneRef} position={position} rotation={rotation} scale={scale} renderOrder={1}>
       <sphereGeometry args={[size, 64, 64]} />
       <meshStandardMaterial
-        // envMap={envMap}
         map={texture}
         normalMap={normalMap}
         roughnessMap={roughnessMap} 
         metalness={cushionMaterialProps.metalness}
         roughness={cushionMaterialProps.roughness}
         opacity={cushionMaterialProps.opacity}
-        envMapIntensity={cushionMaterialProps.envMapIntensity}
         color={cushionMaterialProps.color}
         emissive={cushionMaterialProps.emissive}
         emissiveIntensity={cushionMaterialProps.emissiveIntensity}

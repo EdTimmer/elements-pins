@@ -7,7 +7,7 @@ export const AppWrapper = styled.div`
   font-family: 'Roboto Mono', monospace;
   padding: 0 370px;
   width: 100%;
-  height: 2120px;
+  height: 2075px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -59,100 +59,6 @@ export const Row = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Header = styled.h1`
-  color: ${colors.seasalt};
-  font-family: 'Carlito', 'Roboto Mono', monospace;
-  font-size: 2.6rem;
-  margin: 0;
-  padding: 0;
-  font-weight: 400;
-  text-align: center;
-`;
-
-export const HeaderContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-`;
-
-export const LogoOneContainer = styled.div`
-  /* border: 1px dashed ${colors.seasalt}; */
-  /* border-radius: 30rem; */
-  width: 35rem;
-  height: 40rem;
-  cursor: pointer;
-  /* margin-top: 20rem; */
-  /* margin-left: 10rem; */
-`;
-
-export const LogoTwoContainer = styled.div`
-  /* border: 1px dashed ${colors.seasalt}; */
-  /* border-radius: 30rem; */
-  width: 35rem;
-  height: 40rem;
-  cursor: pointer;
-  /* margin-top: 20rem; */
-`;
-
-export const ThreeDWebGroupContainer = styled.div`
-  /* border: 1px dashed ${colors.seasalt}; */
-  /* border-radius: 30rem; */
-  width: 50rem;
-  height: 25rem;
-  cursor: pointer;
-  /* margin-right: 20rem; */
-  /* margin-top: -20rem; */
-`;
-
-export const DeloitteDigitalLogoContainer = styled.div`
-  /* border: 1px dashed ${colors.seasalt}; */
-  /* border-radius: 30rem; */
-  width: 80rem;
-  height: 40rem;
-  cursor: pointer;
-
-  @media (max-width: 450px) {
-    width: 45rem;
-    height: 25rem;
-    margin-bottom: 5rem;
-  }
-
-  @media (max-width: 650px) {
-    margin-bottom: 5rem;
-  }
-`;
-
-export const BackgroundCanvas = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0; /* Ensure background canvas is behind other content */
-  pointer-events: none; /* Prevent canvas from intercepting pointer events */
-`;
-
-export const Title = styled.h1`
-  color: ${colors.seasalt};
-  font-size: 3.8rem;
-  margin: 0;
-  letter-spacing: 1.0rem;
-  text-transform: lowercase;
-  padding: 0;
-  font-weight: 300;
-`;
-
-export const ContactRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 3rem;
-  align-items: flex-start;
-  margin-bottom: 3rem;
-`;
-
 export const WebLinkContainer = styled.div`
   color: ${colors.seasalt};  
   position: fixed;
@@ -173,22 +79,6 @@ export const WebLinkContainer = styled.div`
       color: #fff;
     }
   }
-`;
-
-export const Email = styled.p`
-  color: ${colors.seasalt};
-  margin: 0;
-  padding: 0;
-  font-size: 1.6rem;
-  text-decoration: none;
-  z-index: 3;
-`;
-
-export const CenterSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
 `;
 
 export const Box = styled.div`
