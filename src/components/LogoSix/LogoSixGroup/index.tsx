@@ -12,9 +12,10 @@ interface Props {
   isFacingUser: boolean;
   setIsFacingUser: (isFacingUser: boolean) => void;
   guiy: string;
+  isClickToggled: boolean;
 }
 
-function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
+function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, isClickToggled, guiy }: Props) {
   const logoSixGroupRef = useRef<Group>(null);
 
   // Set the initial rotation on mount only
@@ -32,7 +33,7 @@ function LogoSixGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
       // Determine the starting rotation.
       const initialRotation = isFacingUser ? 0 : Math.PI;
       // Set the target rotation: rotate an extra PI when the mouse enters.
-      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+      const targetY = (isMouseEntered || isClickToggled) ? initialRotation + Math.PI : initialRotation;
       
       // Incorporate delta into the interpolation factor for frame rate independence.
       const speed = 3; // Adjust this to control the smoothness/speed

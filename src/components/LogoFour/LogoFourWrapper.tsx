@@ -11,8 +11,10 @@ interface Props {
 const LogoFourWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
+  const [isClickToggled, setIsClickToggled] = useState(false);
 
   const handleMouseEnter = () => {
+    if (isSmallScreen) return;
     setIsMouseEntered(true);
   }
   const handleMouseLeave = () => {
@@ -20,7 +22,7 @@ const LogoFourWrapper = ({guiy, isSmallScreen}: Props) => {
     setIsMouseEntered(false);
   }
   const handleRotate = () => {
-    setIsFacingUser(!isFacingUser);
+    setIsClickToggled(!isClickToggled);
   }
 
   return (
@@ -33,7 +35,7 @@ const LogoFourWrapper = ({guiy, isSmallScreen}: Props) => {
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
         <ambientLight intensity={0.5} />
-        <LogoFourGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
+        <LogoFourGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} isClickToggled={isClickToggled} />
         <directionalLight position={[0, 3, 5]} />
         <directionalLight position={[-5, 0, 5]} />
         <directionalLight position={[5, -5, 5]} />

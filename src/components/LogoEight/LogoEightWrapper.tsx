@@ -11,10 +11,11 @@ interface Props {
 
 const LogoEightWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
-
   const [isMouseEntered, setIsMouseEntered] = useState(false);
+  const [isClickToggled, setIsClickToggled] = useState(false);
 
   const handleMouseEnter = () => {
+    if (isSmallScreen) return;
     setIsMouseEntered(true);
   }
   const handleMouseLeave = () => {
@@ -22,7 +23,7 @@ const LogoEightWrapper = ({guiy, isSmallScreen}: Props) => {
     setIsMouseEntered(false);
   }
   const handleRotate = () => {
-    setIsFacingUser(!isFacingUser);
+    setIsClickToggled(!isClickToggled);
   }
 
   const bottomLightRef = useRef<THREE.DirectionalLight | null>(null);
@@ -47,7 +48,7 @@ const LogoEightWrapper = ({guiy, isSmallScreen}: Props) => {
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
         <ambientLight intensity={1} />
-        <LogoEightGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
+        <LogoEightGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} isClickToggled={isClickToggled} />
         <directionalLight ref={topLightRefTwo} position={[0, 2, 10]} intensity={0.1} />
         <directionalLight ref={bottomLightRef} position={[0, -2, 10]} intensity={0.1} />  
         <directionalLight position={[2, 3, 3]} intensity={1} />

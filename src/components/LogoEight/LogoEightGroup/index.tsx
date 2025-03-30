@@ -13,9 +13,10 @@ interface Props {
   isFacingUser: boolean;
   setIsFacingUser: (isFacingUser: boolean) => void;
   guiy: string;
+  isClickToggled: boolean;
 }
 
-function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: Props) {
+function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, isClickToggled, guiy }: Props) {
   const logoEightGroupRef = useRef<Group>(null);
 
   // Set the initial rotation on mount only
@@ -33,7 +34,7 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
       // Determine the starting rotation.
       const initialRotation = isFacingUser ? 0 : Math.PI;
       // Set the target rotation: rotate an extra PI when the mouse enters.
-      const targetY = isMouseEntered ? initialRotation + Math.PI : initialRotation;
+      const targetY = (isMouseEntered || isClickToggled) ? initialRotation + Math.PI : initialRotation;
       
       // Incorporate delta into the interpolation factor for frame rate independence.
       const speed = 3; // Adjust this to control the smoothness/speed
