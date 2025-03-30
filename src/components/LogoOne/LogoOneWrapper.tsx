@@ -35,7 +35,7 @@ const LogoOneWrapper = ({guiy, isSmallScreen}: Props) => {
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
         <ambientLight intensity={1} />
-        <LogoOneGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} isClickToggled={isClickToggled} />
+        <LogoOneGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} isClickToggled={isClickToggled} isSmallScreen={isSmallScreen} />
         {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
         <directionalLight position={[0, -1, 1]} intensity={1} />
         <directionalLight position={[-10, -10, 1]} intensity={0.5} />

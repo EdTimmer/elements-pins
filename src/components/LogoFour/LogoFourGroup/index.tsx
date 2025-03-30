@@ -12,9 +12,10 @@ interface Props {
   setIsFacingUser: (isFacingUser: boolean) => void;
   guiy: string;
   isClickToggled: boolean;
+  isSmallScreen: boolean;
 }
 
-function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, isClickToggled, guiy }: Props) {
+function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, isClickToggled, guiy, isSmallScreen }: Props) {
   const logoFourGroupRef = useRef<Group>(null);
 
   // Set the initial rotation on mount only
@@ -32,7 +33,8 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, isClickT
       // Determine the starting rotation.
       const initialRotation = isFacingUser ? 0 : Math.PI;
       // Set the target rotation: rotate an extra PI when the mouse enters.
-      const targetY = (isMouseEntered || isClickToggled) ? initialRotation + Math.PI : initialRotation;
+      const targetY = isSmallScreen ? (isClickToggled ? initialRotation + Math.PI : initialRotation) : (isMouseEntered ? initialRotation + Math.PI : initialRotation);
+
       
       // Incorporate delta into the interpolation factor for frame rate independence.
       const speed = 3; // Adjust this to control the smoothness/speed
@@ -93,7 +95,7 @@ function LogoFourGroup({ isMouseEntered, isFacingUser, setIsFacingUser, isClickT
 
     // GUI media query
     const updateGUIVisibility = () => {
-      const shouldShowGUI = window.innerWidth >= 1250; // Adjust breakpoint as needed
+      const shouldShowGUI = window.innerWidth >= 1250;
       guiFour.domElement.style.display = shouldShowGUI ? 'block' : 'none';
     };
     updateGUIVisibility();

@@ -22,7 +22,7 @@ import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const isSmallScreen = windowWidth < 600;
+  const isSmallScreen = windowWidth < 1250;
 
   useEffect(() => {
     const handleResize = () => {
