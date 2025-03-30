@@ -56,10 +56,14 @@ export const RowOne = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: -80px;
+  margin-top: -260px;
   margin-bottom: -100px;
   padding: 0;
   flex-wrap: wrap;
+
+  @media (max-width: 1250px) {
+    margin-top: -230px;
+  }
 `;
 
 export const Row = styled.div`
