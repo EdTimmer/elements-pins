@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import {
   AppWrapper,
   AppMiddleColumn,
@@ -8,14 +9,15 @@ import {
   Box,
 } from './App.styles'
 
-import LogoSixWrapper from './components/LogoSix/LogoSixWrapper';
-import LogoFourWrapper from './components/LogoFour/LogoFourWrapper';
-import LogoTwoWrapper from './components/LogoTwo/LogoTwoWrapper';
-import LogoFiveWrapper from './components/LogoFive/LogoFiveWrapper';
-import LogoOneWrapper from './components/LogoOne/LogoOneWrapper';
-import LogoThreeWrapper from './components/LogoThree/LogoThreeWrapper';
-import LogoSevenWrapper from './components/LogoSeven/LogoSevenWrapper';
-import LogoEightWrapper from './components/LogoEight/LogoEightWrapper';
+const LogoSixWrapper = lazy(() => import('./components/LogoSix/LogoSixWrapper'));
+const LogoFourWrapper = lazy(() => import('./components/LogoFour/LogoFourWrapper'));
+const LogoTwoWrapper = lazy(() => import('./components/LogoTwo/LogoTwoWrapper'));
+const LogoFiveWrapper = lazy(() => import('./components/LogoFive/LogoFiveWrapper'));
+const LogoOneWrapper = lazy(() => import('./components/LogoOne/LogoOneWrapper'));
+const LogoThreeWrapper = lazy(() => import('./components/LogoThree/LogoThreeWrapper'));
+const LogoSevenWrapper = lazy(() => import('./components/LogoSeven/LogoSevenWrapper'));
+const LogoEightWrapper = lazy(() => import('./components/LogoEight/LogoEightWrapper'));
+import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
   return (
@@ -26,33 +28,29 @@ function App() {
           <a href="https://www.edtimmer.com/" target="_blank" aria-label="Link to source code" title="Link to source code">edtimmer.com</a>
         </WebLinkContainer>
 
-        <CenterSectionWrapper>
-          <RowOne>
-            <LogoOneWrapper guiy={'10px'} />        
-            <LogoTwoWrapper guiy={'10px'} />
-          </RowOne>
+        <Suspense fallback={<LoadingSpinner />}>
+          <CenterSectionWrapper>
+            <RowOne>              
+              <LogoOneWrapper guiy={'10px'} />           
+              <LogoTwoWrapper guiy={'10px'} />
+            </RowOne>
 
-          <Row>
-            <LogoThreeWrapper guiy={'445px'} />
-            <LogoFourWrapper guiy={'445px'} />
-          </Row>
+            <Row>             
+              <LogoThreeWrapper guiy={'445px'} />        
+              <LogoFourWrapper guiy={'445px'} />              
+            </Row>
 
-          <Row>
-            <LogoFiveWrapper guiy={'880px'} />
-            <LogoSixWrapper guiy={'880px'} />
-          </Row>
+            <Row>
+              <LogoFiveWrapper guiy={'880px'} />
+              <LogoSixWrapper guiy={'880px'} />              
+            </Row>
 
-          <Row>
-            {/* <LogoSevenOldWrapper guiy={'1960px'} /> */}
-            <LogoSevenWrapper guiy={'1365px'} />
-            <LogoEightWrapper guiy={'1365px'} />
-          </Row>
-
-          {/* <Row>
-            <LogoNineWrapper guiy={'1960px'} />
-          </Row> */}
-
-        </CenterSectionWrapper>
+            <Row>              
+              <LogoSevenWrapper guiy={'1365px'} />
+              <LogoEightWrapper guiy={'1365px'} />              
+            </Row>
+          </CenterSectionWrapper>
+        </Suspense>
       </AppMiddleColumn>
     </AppWrapper>
   )

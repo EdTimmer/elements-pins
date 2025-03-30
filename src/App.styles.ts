@@ -24,6 +24,10 @@ export const AppMiddleColumn = styled.div`
   height: 100%;
   overflow: hidden;
   background-color: ${colors.eerieBlack};
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 export const CenterSectionWrapper = styled.div`
