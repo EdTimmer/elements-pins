@@ -76,7 +76,7 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
     roughness: 0.6,     
     metalness: 0.9,
     emissive: '#fff',
-    emissiveIntensity: 0,
+    emissiveIntensity: 0.01,
   });
 
   useEffect(() => {

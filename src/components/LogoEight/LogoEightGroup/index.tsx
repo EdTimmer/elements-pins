@@ -91,7 +91,7 @@ function LogoEightGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
     noiseSwirlValue: 1.0,
     noiseScale: 1.0,
     noiseTimeScale: 0.05,
-    opacity: 0.3,
+    opacity: 0.5,
   });
 
   // CUSHION COVER GUI REFS
