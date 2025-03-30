@@ -20,6 +20,9 @@ const LogoEightWrapper = ({guiy, isSmallScreen}: Props) => {
   const handleMouseLeave = () => {
     setIsMouseEntered(false);
   }
+  const handleRotate = () => {
+    setIsFacingUser(!isFacingUser);
+  }
 
   const bottomLightRef = useRef<THREE.DirectionalLight | null>(null);
   const topLightRefTwo = useRef<THREE.DirectionalLight | null>(null);
@@ -38,6 +41,7 @@ const LogoEightWrapper = ({guiy, isSmallScreen}: Props) => {
       style={{ width: `300px`, height: `300px`, cursor: `pointer`}}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleRotate}
     >
       <Canvas gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
