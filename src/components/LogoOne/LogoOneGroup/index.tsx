@@ -72,7 +72,7 @@ function LogoOneGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: P
   const cushionControllersRef = useRef<Record<string, any>>({}); // Store the controllers in a ref
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
     color: '#fff',
-    metalness: 0,
+    metalness: 0.4,
     roughness: 0.7,
     opacity: 1,
     emissive: '#000',
