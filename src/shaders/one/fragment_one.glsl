@@ -56,13 +56,16 @@ void main() {
   float strength = sin((cnoise(vUv * uNoise) + uTime * uSpeed ) * uOscillationFrequency);
 
   // clamp the strength
-  strength = clamp(strength, 0.0, 1.0);
+  strength = clamp(strength, 0.0, 1.0); // 0.06
 
+  // Black
   vec3 firstColor = vec3(0.0);
-  vec3 secondColor = vec3(0.054, 0.058, 0.062); // 0.086, 0.537, 0
+  // Dark purple
+  vec3 secondColor = vec3(0.133, 0, 0.239) * 0.2; // Scale down intensity
+  // Gray
+  // vec3 secondColor = vec3(0.054, 0.058, 0.062); // 0.086, 0.537, 0
   vec3 mixedColor = mix(firstColor, secondColor, strength);
   
-
   gl_FragColor = vec4(mixedColor, 1.0);
 
   #include <colorspace_fragment>    
