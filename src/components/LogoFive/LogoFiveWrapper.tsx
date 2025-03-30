@@ -5,9 +5,10 @@ import LogoFiveGroup from './LogoFiveGroup';
 
 interface Props {
   guiy: string;
+  isSmallScreen: boolean;
 }
 
-const LogoFiveWrapper = ({guiy}: Props) => {
+const LogoFiveWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -31,7 +32,7 @@ const LogoFiveWrapper = ({guiy}: Props) => {
         <directionalLight position={[0, 5, 5]} intensity={0.5} />
         <directionalLight position={[-5, -5, 5]} />
         <directionalLight position={[5, -5, 5]} />
-        <OrbitControls enableDamping enableZoom={false} />
+        {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
       </Canvas>
     </div>        
   );

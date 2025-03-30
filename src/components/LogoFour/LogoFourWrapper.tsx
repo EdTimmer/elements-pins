@@ -5,9 +5,10 @@ import LogoFourGroup from './LogoFourGroup';
 
 interface Props {
   guiy: string;
+  isSmallScreen: boolean;
 }
 
-const LogoFourWrapper = ({guiy}: Props) => {
+const LogoFourWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -31,7 +32,7 @@ const LogoFourWrapper = ({guiy}: Props) => {
         <directionalLight position={[0, 3, 5]} />
         <directionalLight position={[-5, 0, 5]} />
         <directionalLight position={[5, -5, 5]} />
-        <OrbitControls enableDamping enableZoom={false} />
+        {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
       </Canvas>
     </div>        
   );

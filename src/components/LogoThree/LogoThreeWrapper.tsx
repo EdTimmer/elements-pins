@@ -6,9 +6,10 @@ import LogoThreeGroup from './LogoThreeGroup';
 
 interface Props {
   guiy: string;
+  isSmallScreen: boolean;
 }
 
-const LogoThreeWrapper = ({guiy}: Props) => {
+const LogoThreeWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -32,7 +33,7 @@ const LogoThreeWrapper = ({guiy}: Props) => {
         <directionalLight position={[0, 3, 5]} intensity={0.5} />
         <directionalLight position={[-5, 0, 5]} intensity={0.5} />
         <directionalLight position={[5, -5, 5]} intensity={0.5} />
-        <OrbitControls enableDamping enableZoom={false} />
+        {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
       </Canvas>
     </div>        
   );

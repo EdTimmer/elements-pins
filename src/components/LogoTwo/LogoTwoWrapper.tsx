@@ -5,9 +5,10 @@ import LogoTwoGroup from './LogoTwoGroup';
 
 interface Props {
   guiy: string;
+  isSmallScreen: boolean;
 }
 
-const LogoTwoWrapper = ({guiy}: Props) => {
+const LogoTwoWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -30,7 +31,7 @@ const LogoTwoWrapper = ({guiy}: Props) => {
         <LogoTwoGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
         <directionalLight position={[0, -1, 1]} intensity={1} />
         <directionalLight position={[-6, -6, 1]} intensity={1} />
-        <OrbitControls enableDamping enableZoom={false} />
+        {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
       </Canvas>
     </div>        
   );

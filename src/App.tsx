@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import {
   AppWrapper,
   AppMiddleColumn,
@@ -21,6 +21,18 @@ const LogoEightWrapper = lazy(() => import('./components/LogoEight/LogoEightWrap
 import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const isSmallScreen = windowWidth < 600;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   return (
     <AppWrapper>
       <Box />
@@ -32,34 +44,34 @@ function App() {
         <Suspense fallback={<LoadingSpinner />}>
           <CenterSectionWrapper>
             <RowOne>              
-              <LogoOneWrapper guiy={'10px'} />
+              <LogoOneWrapper guiy={'10px'} isSmallScreen={isSmallScreen} />
 
               <RightSidePin>        
-                <LogoTwoWrapper guiy={'10px'} />
+                <LogoTwoWrapper guiy={'10px'} isSmallScreen={isSmallScreen} />
               </RightSidePin>
             </RowOne>
 
             <Row>             
-              <LogoThreeWrapper guiy={'445px'} />
+              <LogoThreeWrapper guiy={'445px'} isSmallScreen={isSmallScreen} />
 
               <RightSidePin>   
-                <LogoFourWrapper guiy={'445px'} />
+                <LogoFourWrapper guiy={'445px'} isSmallScreen={isSmallScreen} />
               </RightSidePin>  
             </Row>
 
             <Row>
-              <LogoFiveWrapper guiy={'880px'} />
+              <LogoFiveWrapper guiy={'880px'} isSmallScreen={isSmallScreen} />
 
               <RightSidePin>
-                <LogoSixWrapper guiy={'880px'} />
+                <LogoSixWrapper guiy={'880px'} isSmallScreen={isSmallScreen} />
               </RightSidePin>         
             </Row>
 
             <Row>              
-              <LogoSevenWrapper guiy={'1365px'} />
+              <LogoSevenWrapper guiy={'1365px'} isSmallScreen={isSmallScreen} />
 
               <RightSidePin>
-                <LogoEightWrapper guiy={'1365px'} />
+                <LogoEightWrapper guiy={'1365px'} isSmallScreen={isSmallScreen} />
               </RightSidePin>     
             </Row>
           </CenterSectionWrapper>

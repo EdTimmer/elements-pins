@@ -6,9 +6,10 @@ import LogoEightGroup from './LogoEightGroup';
 
 interface Props {
   guiy: string;
+  isSmallScreen: boolean;
 }
 
-const LogoEightWrapper = ({guiy}: Props) => {
+const LogoEightWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
 
   const [isMouseEntered, setIsMouseEntered] = useState(false);
@@ -48,7 +49,7 @@ const LogoEightWrapper = ({guiy}: Props) => {
         <directionalLight position={[-2, -3, 3]} intensity={1} />
         <directionalLight position={[-2, 3, 3]} intensity={1} />
         <directionalLight position={[2, -3, 3]} intensity={1} />
-        <OrbitControls enableDamping enableZoom={false} />
+        {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
       </Canvas>
     </div>        
   );

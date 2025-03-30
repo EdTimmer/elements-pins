@@ -6,9 +6,10 @@ import LogoSixGroup from './LogoSixGroup';
 
 interface Props {
   guiy: string;
+  isSmallScreen: boolean;
 }
 
-const LogoSixWrapper = ({guiy}: Props) => {
+const LogoSixWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -32,7 +33,7 @@ const LogoSixWrapper = ({guiy}: Props) => {
         <directionalLight position={[0, 5, 5]} />
         <directionalLight position={[-5, -5, 5]} />
         <directionalLight position={[5, -5, 5]} />
-        <OrbitControls enableDamping enableZoom={false} />
+        {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
       </Canvas>
     </div>        
   );

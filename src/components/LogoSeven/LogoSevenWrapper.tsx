@@ -6,9 +6,10 @@ import LogoSevenGroup from './LogoSevenGroup';
 
 interface Props {
   guiy: string;
+  isSmallScreen: boolean;
 }
 
-const LogoSevenWrapper = ({guiy}: Props) => {
+const LogoSevenWrapper = ({guiy, isSmallScreen}: Props) => {
   const [isFacingUser, setIsFacingUser] = useState(true);
 
   const [isMouseEntered, setIsMouseEntered] = useState(false);
@@ -44,7 +45,7 @@ const LogoSevenWrapper = ({guiy}: Props) => {
         <LogoSevenGroup isMouseEntered={isMouseEntered} isFacingUser={isFacingUser} setIsFacingUser={setIsFacingUser} guiy={guiy} />
         <directionalLight ref={topLightRefTwo} position={[0, 2, 10]} intensity={0.1} />
         <directionalLight ref={bottomLightRef} position={[0, -2, 10]} intensity={0.1} />  
-        <OrbitControls enableDamping enableZoom={false} />
+        {!isSmallScreen && <OrbitControls enableDamping enableZoom={false} />}
       </Canvas>
     </div>        
   );
