@@ -44,7 +44,7 @@ const Cushion = ({ position, rotation, size, scale, cushionMaterialProps }: Prop
     <mesh ref={shapeOneRef} position={position} rotation={rotation} scale={scale} renderOrder={1}>
       <sphereGeometry args={[size, 32, 32]} />
       <meshStandardMaterial
-        map={texture}
+        // map={texture}
         normalMap={normalMap}
         roughnessMap={roughnessMap}
         metalness={cushionMaterialProps.metalness}

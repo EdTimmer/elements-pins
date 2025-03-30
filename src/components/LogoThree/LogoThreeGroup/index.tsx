@@ -73,10 +73,10 @@ function LogoThreeGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }:
   const [cushionMaterialProps, setCushionMaterialProps] = useState({
     color: '#fff',
     opacity: 1.0,
-    roughness: 0.6,     
+    roughness: 0.7,     
     metalness: 0.9,
     emissive: '#fff',
-    emissiveIntensity: 0.01,
+    emissiveIntensity: 0.0,
   });
 
   useEffect(() => {
