@@ -141,5 +141,6 @@ void main() {
   // Enhance contrast (noise raised to the fourth power, then scaled)
   noise = pow(noise, 4.0) * 2.0;
   
-  gl_FragColor = vec4(noise, noise, noise, uOpacity);
+  // Remove multiplications to make noise white
+  gl_FragColor = vec4(noise * 0.7, noise * 0.85, noise, uOpacity);
 }

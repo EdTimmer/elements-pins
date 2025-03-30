@@ -76,7 +76,7 @@ function LogoFiveGroup({ isMouseEntered, isFacingUser, setIsFacingUser, guiy }: 
     opacity: 1.0,
     roughness: 0,     
     metalness: 1.0,
-    envMapIntensity: 0.4,
+    envMapIntensity: 0.55,
     emissive: '#fff',
     emissiveIntensity: 0,
     envMapImages: listOfImages,
