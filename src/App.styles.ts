@@ -85,7 +85,7 @@ export const RightSidePin = styled.div`
 export const WebLinkContainer = styled.div`
   color: ${colors.seasalt};  
   position: fixed;
-  top: 0;
+  top: 10px;
   left: 50%;
   transform: translate(-50%, 0%);
   font-size: 16px;
