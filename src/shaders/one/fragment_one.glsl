@@ -61,7 +61,10 @@ void main() {
   // Black
   vec3 firstColor = vec3(0.0);
   // Dark purple
-  vec3 secondColor = vec3(0.133, 0, 0.239) * 0.2; // Scale down intensity
+  // vec3 secondColor = vec3(0.133, 0, 0.239) * 0.2; // Scale down intensity
+
+  // Light purple
+  vec3 secondColor = vec3(0.92, 0.80, 1.0) * 0.05; // Scale down intensity
   // Gray
   // vec3 secondColor = vec3(0.054, 0.058, 0.062); // 0.086, 0.537, 0
   vec3 mixedColor = mix(firstColor, secondColor, strength);
